@@ -1,0 +1,7 @@
+/home/kristjan/FRI/TV/01_uvod/build/CMakeFiles/classes.dir
+/home/kristjan/FRI/TV/01_uvod/build/CMakeFiles/exceptions.dir
+/home/kristjan/FRI/TV/01_uvod/build/CMakeFiles/hello.dir
+/home/kristjan/FRI/TV/01_uvod/build/CMakeFiles/memory.dir
+/home/kristjan/FRI/TV/01_uvod/build/CMakeFiles/stl.dir
+/home/kristjan/FRI/TV/01_uvod/build/CMakeFiles/strings.dir
+/home/kristjan/FRI/TV/01_uvod/build/CMakeFiles/templates.dir

@@ -1,0 +1,4 @@
+typedef Point_<float> Point2f
+
+# cmake with parameters
+$ cmake -DOpenCV_DIR=/usr/local/share/OpenCV/ ..

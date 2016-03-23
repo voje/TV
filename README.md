@@ -1,0 +1,1 @@
+# Tehnične veščine
