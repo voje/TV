@@ -1,0 +1,1 @@
+/home/kristjan/FRI/TV/04_geometry/task/build/CMakeFiles/my_hom.dir

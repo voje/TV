@@ -1,0 +1,5 @@
+/home/kristjan/FRI/TV/06_video/build/CMakeFiles/background.dir
+/home/kristjan/FRI/TV/06_video/build/CMakeFiles/bouncy_ball.dir
+/home/kristjan/FRI/TV/06_video/build/CMakeFiles/flow.dir
+/home/kristjan/FRI/TV/06_video/build/CMakeFiles/kalman.dir
+/home/kristjan/FRI/TV/06_video/build/CMakeFiles/tracking.dir

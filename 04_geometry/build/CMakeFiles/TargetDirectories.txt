@@ -1,0 +1,7 @@
+/home/kristjan/FRI/TV/04_geometry/build/CMakeFiles/calibration.dir
+/home/kristjan/FRI/TV/04_geometry/build/CMakeFiles/homography.dir
+/home/kristjan/FRI/TV/04_geometry/build/CMakeFiles/keypoints.dir
+/home/kristjan/FRI/TV/04_geometry/build/CMakeFiles/matching.dir
+/home/kristjan/FRI/TV/04_geometry/build/CMakeFiles/opencv_calibration.dir
+/home/kristjan/FRI/TV/04_geometry/build/CMakeFiles/pose.dir
+/home/kristjan/FRI/TV/04_geometry/build/CMakeFiles/rectify.dir

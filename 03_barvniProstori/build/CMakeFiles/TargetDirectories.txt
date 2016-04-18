@@ -1,0 +1,8 @@
+/home/kristjan/FRI/TV/03_barvniProstori/build/CMakeFiles/colorful_rings.dir
+/home/kristjan/FRI/TV/03_barvniProstori/build/CMakeFiles/edges.dir
+/home/kristjan/FRI/TV/03_barvniProstori/build/CMakeFiles/filtering.dir
+/home/kristjan/FRI/TV/03_barvniProstori/build/CMakeFiles/histograms.dir
+/home/kristjan/FRI/TV/03_barvniProstori/build/CMakeFiles/hough.dir
+/home/kristjan/FRI/TV/03_barvniProstori/build/CMakeFiles/morphology.dir
+/home/kristjan/FRI/TV/03_barvniProstori/build/CMakeFiles/my_threshold.dir
+/home/kristjan/FRI/TV/03_barvniProstori/build/CMakeFiles/threshold.dir

@@ -1,0 +1,17 @@
+PROJECT(cpp)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8 FATAL_ERROR)
+
+FIND_PACKAGE(OpenCV REQUIRED)
+LINK_LIBRARIES(${OpenCV_LIBS})
+INCLUDE_DIRECTORIES(AFTER ${CMAKE_CURRENT_BINARY_DIR} ${OpenCV_INCLUDE_DIR})
+
+ADD_EXECUTABLE(datatypes datatypes.cpp)
+ADD_EXECUTABLE(files files.cpp)
+ADD_EXECUTABLE(camera camera.cpp)
+ADD_EXECUTABLE(drawing drawing.cpp)
+ADD_EXECUTABLE(utilities utilities.cpp)
+ADD_EXECUTABLE(serialization serialization.cpp)
+ADD_EXECUTABLE(task task.cpp)
+
+FILE(COPY video.avi aurora.jpg DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+

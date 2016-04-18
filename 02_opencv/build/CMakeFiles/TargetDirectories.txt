@@ -1,0 +1,7 @@
+/home/kristjan/FRI/TV/02_opencv/build/CMakeFiles/camera.dir
+/home/kristjan/FRI/TV/02_opencv/build/CMakeFiles/datatypes.dir
+/home/kristjan/FRI/TV/02_opencv/build/CMakeFiles/drawing.dir
+/home/kristjan/FRI/TV/02_opencv/build/CMakeFiles/files.dir
+/home/kristjan/FRI/TV/02_opencv/build/CMakeFiles/serialization.dir
+/home/kristjan/FRI/TV/02_opencv/build/CMakeFiles/task.dir
+/home/kristjan/FRI/TV/02_opencv/build/CMakeFiles/utilities.dir

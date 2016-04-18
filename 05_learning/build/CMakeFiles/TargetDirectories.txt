@@ -1,0 +1,4 @@
+/home/kristjan/FRI/TV/05_learning/build/CMakeFiles/bow.dir
+/home/kristjan/FRI/TV/05_learning/build/CMakeFiles/detector.dir
+/home/kristjan/FRI/TV/05_learning/build/CMakeFiles/face.dir
+/home/kristjan/FRI/TV/05_learning/build/CMakeFiles/faces.dir
