@@ -93,6 +93,7 @@ int main(int argc, char** argv){
 
 		if(running){
 			cout << "RUNNING" << endl;
+			system("bash ../key_press.sh w");
 		}else{
 			cout << "STANDING STILL" << endl;
 		}
