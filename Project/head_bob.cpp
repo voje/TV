@@ -89,13 +89,16 @@ int main(int argc, char** argv){
 					}
 				}
 			}
-		}
+                }else{
+                    running = false;
+                }
 
 		if(running){
 			cout << "RUNNING" << endl;
-			system("bash ../key_press.sh w");
+			system("bash ../key_press.sh w down");
 		}else{
 			cout << "STANDING STILL" << endl;
+			system("bash ../key_press.sh w up");
 		}
 
 		imshow(WINDOW_NAME, frame);		
