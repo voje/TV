@@ -28,7 +28,7 @@ int main(int argc, char** argv){
 	param.maxSize = Size(200, 200);
 	string cascade_file = "haarcascade_frontalface_default.xml"; //you will need this file inside /build
 
-	Mat frame, g_frame;
+	Mat frame, g_frame, mask_MOG2;
 	char c;
 	int new_y, dy;
 	int old_y = -1;
@@ -42,12 +42,16 @@ int main(int argc, char** argv){
 	CascadeClassifier detector;
 	vector<Rect> found;
 
+	//from file
+	string const filename = "../sample_videos/face_dark.webm";
+	cap.open(filename);
+
 	//capture video
-	cap.open(0);
+	/*cap.open(0);
 	if(!cap.isOpened()){
 		cout << "Could not find input device." << endl;
 		return 1;
-	}
+	}*/
 
 	bool loaded = detector.load(cascade_file);
 	if(!loaded){
@@ -55,13 +59,18 @@ int main(int argc, char** argv){
 		return 1;
 	}
 
+	Ptr<BackgroundSubtractor> pMOG2;
+	pMOG2 = createBackgroundSubtractorMOG2();
+
 	namedWindow(WINDOW_NAME, 1);
 	cout << "Press 'q' to quit." << endl;
 
 	for(;;){
 		cap >> frame;
 
-		flip(frame, frame, 0); //1 flips around x axis
+		//flip(frame, frame, 0); //1 flips around x axis
+
+		pMOG2->apply(frame, mask_MOG2);
 
 		cvtColor(frame, g_frame, CV_BGR2GRAY);
 
@@ -102,6 +111,7 @@ int main(int argc, char** argv){
 		}
 
 		imshow(WINDOW_NAME, frame);		
+		imshow("MOG2", mask_MOG2);
 		if(waitKey(30) == 'q') break;
 
 		old_y = new_y;

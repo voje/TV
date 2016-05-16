@@ -1,0 +1,7 @@
+First step was making a face detector (I used Haar Cascades, using haarcascade_frontalface_default.xml from the OpenCV library).
+
+I used it to track face movement and determine whether the person is running or standing still.
+Testing shwed promising results. One note: face detection does not work well if the person is wearing glasses.
+
+time: cca 6h.
+
