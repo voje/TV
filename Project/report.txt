@@ -3,5 +3,8 @@ First step was making a face detector (I used Haar Cascades, using haarcascade_f
 I used it to track face movement and determine whether the person is running or standing still.
 Testing shwed promising results. One note: face detection does not work well if the person is wearing glasses.
 
-time: cca 6h.
+time: 6h
 
+Removed background from image. Trying to speed up face detection. Next step: detecting hands/fists.
+
+time: 3h.

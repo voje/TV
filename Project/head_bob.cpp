@@ -43,7 +43,7 @@ int main(int argc, char** argv){
 	vector<Rect> found;
 
 	//from file
-	string const filename = "../sample_videos/face_dark.webm";
+	string const filename = "../sample_videos/running1.webm";
 	cap.open(filename);
 
 	//capture video
@@ -112,7 +112,7 @@ int main(int argc, char** argv){
 
 		imshow(WINDOW_NAME, frame);		
 		imshow("MOG2", mask_MOG2);
-		if(waitKey(30) == 'q') break;
+		if(waitKey(1) == 'q') break;
 
 		old_y = new_y;
 	}	
