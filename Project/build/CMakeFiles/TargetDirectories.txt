@@ -1,1 +1,2 @@
+/home/kristjan/FRI/TV/Project/build/CMakeFiles/detector.dir
 /home/kristjan/FRI/TV/Project/build/CMakeFiles/head_bob.dir

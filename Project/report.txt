@@ -8,3 +8,12 @@ time: 6h
 Removed background from image. Trying to speed up face detection. Next step: detecting hands/fists.
 
 time: 3h.
+
+New plan:
+	- detect face (done)
+	- after first detection, reduce search window, to increase detection speed
+	- extract foreground (person)
+	- detect hands using skin color
+	- object MovementTracker tracks changes in face y position and hands x and y position (5 dimensions). Face x is omitted to speed up the recognition of gestures.
+
+

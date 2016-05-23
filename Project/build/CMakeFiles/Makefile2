@@ -53,13 +53,48 @@ CMAKE_SOURCE_DIR = /home/kristjan/FRI/TV/Project
 CMAKE_BINARY_DIR = /home/kristjan/FRI/TV/Project/build
 
 #=============================================================================
+# Target rules for target CMakeFiles/detector.dir
+
+# All Build rule for target.
+CMakeFiles/detector.dir/all:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/depend
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/kristjan/FRI/TV/Project/build/CMakeFiles  1
+	@echo "Built target detector"
+.PHONY : CMakeFiles/detector.dir/all
+
+# Include target in all.
+all: CMakeFiles/detector.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/detector.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kristjan/FRI/TV/Project/build/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/detector.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kristjan/FRI/TV/Project/build/CMakeFiles 0
+.PHONY : CMakeFiles/detector.dir/rule
+
+# Convenience name for target.
+detector: CMakeFiles/detector.dir/rule
+.PHONY : detector
+
+# clean rule for target.
+CMakeFiles/detector.dir/clean:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/clean
+.PHONY : CMakeFiles/detector.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/detector.dir/clean
+.PHONY : clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/head_bob.dir
 
 # All Build rule for target.
 CMakeFiles/head_bob.dir/all:
 	$(MAKE) -f CMakeFiles/head_bob.dir/build.make CMakeFiles/head_bob.dir/depend
 	$(MAKE) -f CMakeFiles/head_bob.dir/build.make CMakeFiles/head_bob.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/kristjan/FRI/TV/Project/build/CMakeFiles  1
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/kristjan/FRI/TV/Project/build/CMakeFiles  2
 	@echo "Built target head_bob"
 .PHONY : CMakeFiles/head_bob.dir/all
 

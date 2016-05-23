@@ -99,6 +99,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named detector
+
+# Build rule for target.
+detector: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 detector
+.PHONY : detector
+
+# fast build rule for target.
+detector/fast:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/build
+.PHONY : detector/fast
+
+#=============================================================================
 # Target rules for targets named head_bob
 
 # Build rule for target.
@@ -110,6 +123,30 @@ head_bob: cmake_check_build_system
 head_bob/fast:
 	$(MAKE) -f CMakeFiles/head_bob.dir/build.make CMakeFiles/head_bob.dir/build
 .PHONY : head_bob/fast
+
+detector.o: detector.cpp.o
+.PHONY : detector.o
+
+# target to build an object file
+detector.cpp.o:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/detector.cpp.o
+.PHONY : detector.cpp.o
+
+detector.i: detector.cpp.i
+.PHONY : detector.i
+
+# target to preprocess a source file
+detector.cpp.i:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/detector.cpp.i
+.PHONY : detector.cpp.i
+
+detector.s: detector.cpp.s
+.PHONY : detector.s
+
+# target to generate assembly for a file
+detector.cpp.s:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/detector.cpp.s
+.PHONY : detector.cpp.s
 
 head_bob.o: head_bob.cpp.o
 .PHONY : head_bob.o
@@ -141,9 +178,13 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... detector"
 	@echo "... edit_cache"
 	@echo "... head_bob"
 	@echo "... rebuild_cache"
+	@echo "... detector.o"
+	@echo "... detector.i"
+	@echo "... detector.s"
 	@echo "... head_bob.o"
 	@echo "... head_bob.i"
 	@echo "... head_bob.s"

@@ -43,5 +43,6 @@ SET(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 SET(CMAKE_DEPEND_INFO_FILES
+  "CMakeFiles/detector.dir/DependInfo.cmake"
   "CMakeFiles/head_bob.dir/DependInfo.cmake"
   )
