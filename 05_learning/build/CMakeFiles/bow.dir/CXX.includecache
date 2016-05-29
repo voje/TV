@@ -34,6 +34,14 @@ opencv2/ml.hpp
 utilities.h
 /home/kristjan/FRI/TV/05_learning/utilities.h
 
+/home/kristjan/FRI/TV/05_learning/utilities.cpp
+sstream
+-
+iostream
+-
+utilities.h
+/home/kristjan/FRI/TV/05_learning/utilities.h
+
 /home/kristjan/FRI/TV/05_learning/utilities.h
 string
 -
