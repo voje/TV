@@ -11,9 +11,11 @@ time: 3h.
 
 New plan:
 	- detect face (done)
-	- after first detection, reduce search window, to increase detection speed
-	- extract foreground (person)
-	- detect hands using skin color
+	- after first detection, reduce search window, to increase detection speed (done, doesn't help much)
+	- extract foreground (done)
+	- detect hands using skin color (in progress)
+	Problem with a t-shirt: the whole forearm is detected. I will take head and detect palm as the furthest point from head.
+	- possible imporovement: detect hsv ranges from detected head.
 	- object MovementTracker tracks changes in face y position and hands x and y position (5 dimensions). Face x is omitted to speed up the recognition of gestures.
 
 

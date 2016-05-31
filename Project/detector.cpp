@@ -1,18 +1,19 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <math.h>
 #include "opencv2/objdetect.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
 #include "opencv2/opencv.hpp"
-
-#define FROM_FILE 1
+#include "color_extractor.h"
 
 using namespace std;
 using namespace cv;
 
 //parameters for detectMultiscale
 struct my_param{
+	bool detect_face;
 	double scaleFactor;
 	int minNeigh; //3 in documentation
 	int flags;	//should be 0
@@ -22,19 +23,45 @@ struct my_param{
 
 struct input_param{
 	int key_wait;
+	bool from_file;
 	string input_file;
 	string cascade_file;
 	int window_margin;
+	int morph_size;
 };
+
+/* 
+bool is_skin(Vec3d &bgr){
+	//equations from a scientific paper - not working
+	Vec3d zero_div(1.0e-9, 1.0e-9, 1.0e-9);
+	//bgr += zero_div;
+	double sum = bgr[0] + bgr[1] + bgr[2];
+	bgr /= sum;
+	if( abs(atan(bgr[0]/bgr[2])-M_PI/4) < M_PI/8 &&
+		abs(atan(bgr[1]/bgr[2])-M_PI/6) < M_PI/18 &&
+		abs(atan(bgr[0]/bgr[1])-M_PI/5) < M_PI/15 ){
+		return true;	
+	}
+	return false;
+}
+*/
+
+void detect_skin(Mat &foreground, Mat &bin){
+	Mat hsv;
+	cvtColor(foreground, hsv, CV_BGR2HSV);
+	inRange(hsv, Scalar(0, 10, 60), Scalar(20, 150, 255), bin);
+}
 
 void read_parameters(input_param &p){
 	ifstream ifs;	
 	ifs.open("detector.conf");
 	string skip, value;
 	ifs >> skip >> value; p.key_wait = atoi(value.c_str());
+	ifs >> skip >> value; p.from_file = atoi(value.c_str());
 	ifs >> skip >> value; p.input_file = value;
 	ifs >> skip >> value; p.cascade_file = value;
 	ifs >> skip >> value; p.window_margin = atoi(value.c_str());
+	ifs >> skip >> value; p.morph_size = atoi(value.c_str());
 }
 
 void extract_foreground(Mat original, Mat &foreground, Ptr<BackgroundSubtractor> bs){
@@ -55,6 +82,7 @@ int main(int argc, char** argv){
 	read_parameters(inp);
 
 	//Set some parameters.
+	param.detect_face = true;
 	param.scaleFactor = 1.1;
 	param.minNeigh = 3;
 	param.flags = 0;
@@ -62,13 +90,15 @@ int main(int argc, char** argv){
 	param.maxSize = Size(200, 200);
 
 	Mat frame, g_frame, mask_MOG2, foreground;
+	Mat morph_element = getStructuringElement( MORPH_ELLIPSE, Size(inp.morph_size, inp.morph_size), Point(floor(inp.morph_size/2)+1, floor(inp.morph_size/2)+1) );
 
 	VideoCapture cap;
 	CascadeClassifier detector;
 	vector<Rect> found_faces;
+	ColorExtractor cex();
 
 	//get input video
-	if(FROM_FILE){
+	if(inp.from_file){
 		cap.open(inp.input_file);
 	}else{
 		cap.open(0);
@@ -90,7 +120,6 @@ int main(int argc, char** argv){
 	pMOG2 = createBackgroundSubtractorMOG2();
 
 	//init window
-	namedWindow("detect_faces", 1);
 	cout << "Press 'q' to quit." << endl;
 
 	for(;;){
@@ -100,21 +129,36 @@ int main(int argc, char** argv){
 			break;
 		}
 
-		//preform necessary rotations
-		//flip(frame, frame, 0); //1 flips around x axis
+		resize(frame, frame, Size(0,0), 0.5, 0.5);
 
+		//preform necessary rotations
+		flip(frame, frame, 0); //1 flips around x axis
+
+		//extract foreground
 		extract_foreground(frame, foreground, pMOG2);
+
+		//detect skin
+		Mat skin_binary = Mat::zeros(frame.size(), CV_8U);
+		detect_skin(foreground, skin_binary);
+		GaussianBlur(skin_binary, skin_binary, Size(5, 5), 2);
+		erode(skin_binary, skin_binary, morph_element);
+		dilate(skin_binary, skin_binary, morph_element);
+		dilate(skin_binary, skin_binary, morph_element);
+		dilate(skin_binary, skin_binary, morph_element);
 
 		cvtColor(frame, g_frame, CV_BGR2GRAY);
 
-		detector.detectMultiScale(g_frame, found_faces, param.scaleFactor, param.minNeigh, param.flags, param.minSize, param.maxSize);
-		//display 1 found face
-		if(found_faces.size() > 0){
-			rectangle(frame, found_faces[0].br(), found_faces[0].tl(), Scalar(0, 255, 0), 2, 8, 0);	
+		if(param.detect_face){
+			detector.detectMultiScale(g_frame, found_faces, param.scaleFactor, param.minNeigh, param.flags, param.minSize, param.maxSize);
+			//display 1 found face
+			if(found_faces.size() > 0){
+				rectangle(frame, found_faces[0].br(), found_faces[0].tl(), Scalar(0, 255, 0), 2, 8, 0);	
+			}
 		}
 
 		imshow("detect_faces", frame);		
-		imshow("foreground", foreground);
+        imshow("foreground", foreground);
+		imshow("skin", skin_binary);
 		
 		char c = waitKey(inp.key_wait);
 		if(c == 'q') break;

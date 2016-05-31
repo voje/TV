@@ -124,6 +124,30 @@ head_bob/fast:
 	$(MAKE) -f CMakeFiles/head_bob.dir/build.make CMakeFiles/head_bob.dir/build
 .PHONY : head_bob/fast
 
+color_extractor.o: color_extractor.cpp.o
+.PHONY : color_extractor.o
+
+# target to build an object file
+color_extractor.cpp.o:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/color_extractor.cpp.o
+.PHONY : color_extractor.cpp.o
+
+color_extractor.i: color_extractor.cpp.i
+.PHONY : color_extractor.i
+
+# target to preprocess a source file
+color_extractor.cpp.i:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/color_extractor.cpp.i
+.PHONY : color_extractor.cpp.i
+
+color_extractor.s: color_extractor.cpp.s
+.PHONY : color_extractor.s
+
+# target to generate assembly for a file
+color_extractor.cpp.s:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/color_extractor.cpp.s
+.PHONY : color_extractor.cpp.s
+
 detector.o: detector.cpp.o
 .PHONY : detector.o
 
@@ -182,6 +206,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... head_bob"
 	@echo "... rebuild_cache"
+	@echo "... color_extractor.o"
+	@echo "... color_extractor.i"
+	@echo "... color_extractor.s"
 	@echo "... detector.o"
 	@echo "... detector.i"
 	@echo "... detector.s"

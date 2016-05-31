@@ -1,5 +1,6 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/detector.dir/detector.cpp.o"
+  "CMakeFiles/detector.dir/color_extractor.cpp.o"
   "detector.pdb"
   "detector"
 )

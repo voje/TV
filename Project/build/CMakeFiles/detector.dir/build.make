@@ -72,14 +72,39 @@ CMakeFiles/detector.dir/detector.cpp.o.provides: CMakeFiles/detector.dir/detecto
 
 CMakeFiles/detector.dir/detector.cpp.o.provides.build: CMakeFiles/detector.dir/detector.cpp.o
 
+CMakeFiles/detector.dir/color_extractor.cpp.o: CMakeFiles/detector.dir/flags.make
+CMakeFiles/detector.dir/color_extractor.cpp.o: ../color_extractor.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/kristjan/FRI/TV/Project/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/detector.dir/color_extractor.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/detector.dir/color_extractor.cpp.o -c /home/kristjan/FRI/TV/Project/color_extractor.cpp
+
+CMakeFiles/detector.dir/color_extractor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/detector.dir/color_extractor.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/kristjan/FRI/TV/Project/color_extractor.cpp > CMakeFiles/detector.dir/color_extractor.cpp.i
+
+CMakeFiles/detector.dir/color_extractor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/detector.dir/color_extractor.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/kristjan/FRI/TV/Project/color_extractor.cpp -o CMakeFiles/detector.dir/color_extractor.cpp.s
+
+CMakeFiles/detector.dir/color_extractor.cpp.o.requires:
+.PHONY : CMakeFiles/detector.dir/color_extractor.cpp.o.requires
+
+CMakeFiles/detector.dir/color_extractor.cpp.o.provides: CMakeFiles/detector.dir/color_extractor.cpp.o.requires
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/color_extractor.cpp.o.provides.build
+.PHONY : CMakeFiles/detector.dir/color_extractor.cpp.o.provides
+
+CMakeFiles/detector.dir/color_extractor.cpp.o.provides.build: CMakeFiles/detector.dir/color_extractor.cpp.o
+
 # Object files for target detector
 detector_OBJECTS = \
-"CMakeFiles/detector.dir/detector.cpp.o"
+"CMakeFiles/detector.dir/detector.cpp.o" \
+"CMakeFiles/detector.dir/color_extractor.cpp.o"
 
 # External object files for target detector
 detector_EXTERNAL_OBJECTS =
 
 detector: CMakeFiles/detector.dir/detector.cpp.o
+detector: CMakeFiles/detector.dir/color_extractor.cpp.o
 detector: CMakeFiles/detector.dir/build.make
 detector: /usr/local/lib/libopencv_xphoto.so.3.1.0
 detector: /usr/local/lib/libopencv_xobjdetect.so.3.1.0
@@ -105,7 +130,6 @@ detector: /usr/local/lib/libopencv_ccalib.so.3.1.0
 detector: /usr/local/lib/libopencv_bioinspired.so.3.1.0
 detector: /usr/local/lib/libopencv_bgsegm.so.3.1.0
 detector: /usr/local/lib/libopencv_aruco.so.3.1.0
-detector: /usr/local/lib/libopencv_viz.so.3.1.0
 detector: /usr/local/lib/libopencv_videostab.so.3.1.0
 detector: /usr/local/lib/libopencv_videoio.so.3.1.0
 detector: /usr/local/lib/libopencv_video.so.3.1.0
@@ -147,6 +171,7 @@ CMakeFiles/detector.dir/build: detector
 .PHONY : CMakeFiles/detector.dir/build
 
 CMakeFiles/detector.dir/requires: CMakeFiles/detector.dir/detector.cpp.o.requires
+CMakeFiles/detector.dir/requires: CMakeFiles/detector.dir/color_extractor.cpp.o.requires
 .PHONY : CMakeFiles/detector.dir/requires
 
 CMakeFiles/detector.dir/clean:

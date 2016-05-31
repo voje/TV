@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/kristjan/FRI/TV/Project/build
 CMakeFiles/detector.dir/all:
 	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/depend
 	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/kristjan/FRI/TV/Project/build/CMakeFiles  1
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/kristjan/FRI/TV/Project/build/CMakeFiles  1 2
 	@echo "Built target detector"
 .PHONY : CMakeFiles/detector.dir/all
 
@@ -69,7 +69,7 @@ all: CMakeFiles/detector.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/detector.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/kristjan/FRI/TV/Project/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/kristjan/FRI/TV/Project/build/CMakeFiles 2
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/detector.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/kristjan/FRI/TV/Project/build/CMakeFiles 0
 .PHONY : CMakeFiles/detector.dir/rule
@@ -94,7 +94,7 @@ clean: CMakeFiles/detector.dir/clean
 CMakeFiles/head_bob.dir/all:
 	$(MAKE) -f CMakeFiles/head_bob.dir/build.make CMakeFiles/head_bob.dir/depend
 	$(MAKE) -f CMakeFiles/head_bob.dir/build.make CMakeFiles/head_bob.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/kristjan/FRI/TV/Project/build/CMakeFiles  2
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/kristjan/FRI/TV/Project/build/CMakeFiles  3
 	@echo "Built target head_bob"
 .PHONY : CMakeFiles/head_bob.dir/all
 

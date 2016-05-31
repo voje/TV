@@ -4,6 +4,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
+  "/home/kristjan/FRI/TV/Project/color_extractor.cpp" "/home/kristjan/FRI/TV/Project/build/CMakeFiles/detector.dir/color_extractor.cpp.o"
   "/home/kristjan/FRI/TV/Project/detector.cpp" "/home/kristjan/FRI/TV/Project/build/CMakeFiles/detector.dir/detector.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
