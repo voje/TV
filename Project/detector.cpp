@@ -46,10 +46,20 @@ bool is_skin(Vec3d &bgr){
 }
 */
 
-void detect_skin(Mat &foreground, Mat &bin){
-	Mat hsv;
-	cvtColor(foreground, hsv, CV_BGR2HSV);
-	inRange(hsv, Scalar(0, 10, 60), Scalar(20, 150, 255), bin);
+void detect_skin(Mat &foreground, Point skin_point, Mat &bin, ColorExtractor cex){
+	//Mat hsv;
+	//cvtColor(foreground, hsv, CV_BGR2HSV);
+	//inRange(hsv, Scalar(0, 10, 60), Scalar(20, 150, 255), bin);
+	for(int i=0; i<bin.rows; i++){
+		for(int j=0; j<bin.cols; j++){
+			Vec3b BGR = foreground.at<Vec3b>(Point(j, i));
+			Point p = cex.BGR_to_bg(BGR);
+			int s = 30;
+			if(p.x <= skin_point.x+s && p.x >= skin_point.x-s && p.y <= skin_point.y+s && p.y >= skin_point.y-s){
+				bin.at<unsigned char>(Point(j, i)) = 255;
+			}
+		}
+	}
 }
 
 void read_parameters(input_param &p){
@@ -95,7 +105,7 @@ int main(int argc, char** argv){
 	VideoCapture cap;
 	CascadeClassifier detector;
 	vector<Rect> found_faces;
-	ColorExtractor cex();
+	ColorExtractor cex;
 
 	//get input video
 	if(inp.from_file){
@@ -138,27 +148,40 @@ int main(int argc, char** argv){
 		extract_foreground(frame, foreground, pMOG2);
 
 		//detect skin
+		Point skin_point(-1, -1);
 		Mat skin_binary = Mat::zeros(frame.size(), CV_8U);
-		detect_skin(foreground, skin_binary);
 		GaussianBlur(skin_binary, skin_binary, Size(5, 5), 2);
 		erode(skin_binary, skin_binary, morph_element);
 		dilate(skin_binary, skin_binary, morph_element);
 		dilate(skin_binary, skin_binary, morph_element);
 		dilate(skin_binary, skin_binary, morph_element);
 
-		cvtColor(frame, g_frame, CV_BGR2GRAY);
+		//detect_skin(foreground, skin_binary);
+		//detect_skin(foreground, skin_point, skin_binary, cex);
+		detect_skin(frame, skin_point, skin_binary, cex);
 
+		//face
+		cvtColor(frame, g_frame, CV_BGR2GRAY);
 		if(param.detect_face){
 			detector.detectMultiScale(g_frame, found_faces, param.scaleFactor, param.minNeigh, param.flags, param.minSize, param.maxSize);
 			//display 1 found face
 			if(found_faces.size() > 0){
-				rectangle(frame, found_faces[0].br(), found_faces[0].tl(), Scalar(0, 255, 0), 2, 8, 0);	
+				Point br = found_faces[0].br();
+				Point tl = found_faces[0].tl();
+				int yresizer = floor((br.y-tl.y)/5);
+				int xresizer = floor((br.x-tl.x)/5);
+				rectangle(frame, br, tl, Scalar(0, 255, 0), 2, 8, 0);	
+				Mat small_face_region = frame(Range(tl.y+yresizer, br.y-yresizer), Range(tl.x+xresizer, br.x-xresizer));		
+				imshow("small_face_region", small_face_region);
+				skin_point = cex.update_bg(small_face_region);
+				cout << skin_point << endl;
 			}
 		}
 
-		imshow("detect_faces", frame);		
-        imshow("foreground", foreground);
+		//imshow("detect_faces", frame);		
+        //imshow("foreground", foreground);
 		imshow("skin", skin_binary);
+		cex.display_bg();
 		
 		char c = waitKey(inp.key_wait);
 		if(c == 'q') break;
