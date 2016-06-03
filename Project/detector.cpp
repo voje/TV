@@ -23,8 +23,8 @@ struct my_param{
 
 struct input_param{
 	int key_wait;
-	bool from_file;
 	string input_file;
+	string output_file;
 	string cascade_file;
 	int window_margin;
 	int morph_size;
@@ -67,8 +67,8 @@ void read_parameters(input_param &p){
 	ifs.open("detector.conf");
 	string skip, value;
 	ifs >> skip >> value; p.key_wait = atoi(value.c_str());
-	ifs >> skip >> value; p.from_file = atoi(value.c_str());
 	ifs >> skip >> value; p.input_file = value;
+	ifs >> skip >> value; p.output_file = value;
 	ifs >> skip >> value; p.cascade_file = value;
 	ifs >> skip >> value; p.window_margin = atoi(value.c_str());
 	ifs >> skip >> value; p.morph_size = atoi(value.c_str());
@@ -103,18 +103,33 @@ int main(int argc, char** argv){
 	Mat morph_element = getStructuringElement( MORPH_ELLIPSE, Size(inp.morph_size, inp.morph_size), Point(floor(inp.morph_size/2)+1, floor(inp.morph_size/2)+1) );
 
 	VideoCapture cap;
+	VideoWriter output_cap;
 	CascadeClassifier detector;
 	vector<Rect> found_faces;
 	ColorExtractor cex;
 
 	//get input video
-	if(inp.from_file){
+	if(inp.input_file != "0"){
 		cap.open(inp.input_file);
 	}else{
 		cap.open(0);
 		if(!cap.isOpened()){
 			cout << "Could not find input device." << endl;
 			return 1;
+		}
+	}
+
+	//optional write to file
+	if(inp.output_file != "0"){
+		output_cap.open(inp.output_file, 
+           cap.get(CV_CAP_PROP_FOURCC),
+           cap.get(CV_CAP_PROP_FPS),
+           cv::Size(cap.get(CV_CAP_PROP_FRAME_WIDTH),
+           cap.get(CV_CAP_PROP_FRAME_HEIGHT)));
+
+		if(!output_cap.isOpened()){
+	        std::cout << "!!! Output video could not be opened" << std::endl;
+	        return 1;
 		}
 	}
 
@@ -137,6 +152,11 @@ int main(int argc, char** argv){
 		//this step is necessary if reading from file
 		if(frame.empty()){
 			break;
+		}
+
+		//write
+		if(inp.output_file != "0"){
+			output_cap.write(frame);	
 		}
 
 		resize(frame, frame, Size(0,0), 0.5, 0.5);
