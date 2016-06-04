@@ -121,11 +121,9 @@ int main(int argc, char** argv){
 
 	//optional write to file
 	if(inp.output_file != "0"){
-		output_cap.open(inp.output_file, 
-           cap.get(CV_CAP_PROP_FOURCC),
-           cap.get(CV_CAP_PROP_FPS),
-           cv::Size(cap.get(CV_CAP_PROP_FRAME_WIDTH),
-           cap.get(CV_CAP_PROP_FRAME_HEIGHT)));
+		int frame_width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
+	   	int frame_height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+		output_cap.open(inp.output_file ,CV_FOURCC('M','J','P','G'),10, Size(frame_width,frame_height),true);
 
 		if(!output_cap.isOpened()){
 	        std::cout << "!!! Output video could not be opened" << std::endl;
