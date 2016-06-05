@@ -22,13 +22,15 @@ struct my_param{
 } param;
 
 struct input_param{
-	int key_wait;
-	string input_file;
-	string output_file;
-	string cascade_file;
-	int window_margin;
-	int morph_size;
-};
+	int key_wait;		//framerate if reading from 0; set it to 30
+	string input_file;	//if it's 0, we're reading from webcam
+	string output_file;	//if it's 0, we're not writing
+	string cascade_file;	//for face detection
+	int window_margin;	//outdated - used to create outer window (narrow the search)
+	int morph_size;		//morphological object size
+	int color_margin;	//how far around skin point do we search in bg space
+	int window_size_cols;	//resize frame after captzre (speed up the process)
+} static inp;
 
 /* 
 bool is_skin(Vec3d &bgr){
@@ -46,16 +48,15 @@ bool is_skin(Vec3d &bgr){
 }
 */
 
-void detect_skin(Mat &foreground, Point skin_point, Mat &bin, ColorExtractor cex){
-	//Mat hsv;
-	//cvtColor(foreground, hsv, CV_BGR2HSV);
-	//inRange(hsv, Scalar(0, 10, 60), Scalar(20, 150, 255), bin);
+void detect_skin(Mat &frame, Point &skin_point, Mat &bin, ColorExtractor cex){
 	for(int i=0; i<bin.rows; i++){
 		for(int j=0; j<bin.cols; j++){
-			Vec3b BGR = foreground.at<Vec3b>(Point(j, i));
+			Vec3b BGR = frame.at<Vec3b>(Point(j, i));
 			Point p = cex.BGR_to_bg(BGR);
-			int s = 30;
-			if(p.x <= skin_point.x+s && p.x >= skin_point.x-s && p.y <= skin_point.y+s && p.y >= skin_point.y-s){
+			if(	p.x <= skin_point.x + inp.color_margin && 
+				p.x >= skin_point.x - inp.color_margin &&
+				p.y <= skin_point.y + inp.color_margin &&
+				p.y >= skin_point.y - inp.color_margin	){
 				bin.at<unsigned char>(Point(j, i)) = 255;
 			}
 		}
@@ -72,6 +73,8 @@ void read_parameters(input_param &p){
 	ifs >> skip >> value; p.cascade_file = value;
 	ifs >> skip >> value; p.window_margin = atoi(value.c_str());
 	ifs >> skip >> value; p.morph_size = atoi(value.c_str());
+	ifs >> skip >> value; p.color_margin = atoi(value.c_str());
+	ifs >> skip >> value; p.window_size_cols = atoi(value.c_str());
 }
 
 void extract_foreground(Mat original, Mat &foreground, Ptr<BackgroundSubtractor> bs){
@@ -88,7 +91,6 @@ void extract_foreground(Mat original, Mat &foreground, Ptr<BackgroundSubtractor>
 
 int main(int argc, char** argv){
 	//read parameters
-	input_param inp;
 	read_parameters(inp);
 
 	//Set some parameters.
@@ -96,17 +98,19 @@ int main(int argc, char** argv){
 	param.scaleFactor = 1.1;
 	param.minNeigh = 3;
 	param.flags = 0;
-	param.minSize = Size(80, 80);
-	param.maxSize = Size(200, 200);
+	param.minSize = Size(20, 20);	//if you resize window, you need to reset these
+	param.maxSize = Size(100, 100);
 
-	Mat frame, g_frame, mask_MOG2, foreground;
+	Mat frame, g_frame;
+	//Mat mask_MOG2, foreground;
 	Mat morph_element = getStructuringElement( MORPH_ELLIPSE, Size(inp.morph_size, inp.morph_size), Point(floor(inp.morph_size/2)+1, floor(inp.morph_size/2)+1) );
 
 	VideoCapture cap;
 	VideoWriter output_cap;
 	CascadeClassifier detector;
 	vector<Rect> found_faces;
-	ColorExtractor cex;
+	ColorExtractor cex(inp.color_margin);
+	Point skin_point(-1, -1);
 
 	//get input video
 	if(inp.input_file != "0"){
@@ -123,7 +127,7 @@ int main(int argc, char** argv){
 	if(inp.output_file != "0"){
 		int frame_width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
 	   	int frame_height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
-		output_cap.open(inp.output_file ,CV_FOURCC('M','J','P','G'),10, Size(frame_width,frame_height),true);
+		output_cap.open(inp.output_file, CV_FOURCC('M','J','P','G'), inp.key_wait, Size(frame_width, frame_height), true);
 
 		if(!output_cap.isOpened()){
 	        std::cout << "!!! Output video could not be opened" << std::endl;
@@ -139,8 +143,10 @@ int main(int argc, char** argv){
 	}
 
 	//init background subtractor
+	/*
 	Ptr<BackgroundSubtractor> pMOG2;
 	pMOG2 = createBackgroundSubtractorMOG2();
+	*/
 
 	//init window
 	cout << "Press 'q' to quit." << endl;
@@ -157,26 +163,33 @@ int main(int argc, char** argv){
 			output_cap.write(frame);	
 		}
 
-		resize(frame, frame, Size(0,0), 0.5, 0.5);
+		//resize by half
+		double frame_scale;
+		if(frame.cols <= inp.window_size_cols){
+			frame_scale = 1;
+		}else{
+			frame_scale = ((double)inp.window_size_cols)/((double)frame.cols);
+		}
+		Size win_size((int)(frame.cols*frame_scale), (int)(frame.rows*frame_scale));
+		resize(frame, frame, win_size);
 
 		//preform necessary rotations
 		flip(frame, frame, 0); //1 flips around x axis
 
+		/*
 		//extract foreground
 		extract_foreground(frame, foreground, pMOG2);
+		*/
 
 		//detect skin
-		Point skin_point(-1, -1);
 		Mat skin_binary = Mat::zeros(frame.size(), CV_8U);
-		GaussianBlur(skin_binary, skin_binary, Size(5, 5), 2);
+		detect_skin(frame, skin_point, skin_binary, cex);
+
+		//GaussianBlur(skin_binary, skin_binary, Size(5, 5), 2);
 		erode(skin_binary, skin_binary, morph_element);
 		dilate(skin_binary, skin_binary, morph_element);
 		dilate(skin_binary, skin_binary, morph_element);
-		dilate(skin_binary, skin_binary, morph_element);
-
-		//detect_skin(foreground, skin_binary);
-		//detect_skin(foreground, skin_point, skin_binary, cex);
-		detect_skin(frame, skin_point, skin_binary, cex);
+		//dilate(skin_binary, skin_binary, morph_element);
 
 		//face
 		cvtColor(frame, g_frame, CV_BGR2GRAY);
@@ -189,10 +202,10 @@ int main(int argc, char** argv){
 				int yresizer = floor((br.y-tl.y)/5);
 				int xresizer = floor((br.x-tl.x)/5);
 				rectangle(frame, br, tl, Scalar(0, 255, 0), 2, 8, 0);	
+				rectangle(skin_binary, br, tl, Scalar(0, 255, 0), 2, 8, 0);	
 				Mat small_face_region = frame(Range(tl.y+yresizer, br.y-yresizer), Range(tl.x+xresizer, br.x-xresizer));		
-				imshow("small_face_region", small_face_region);
+				//imshow("small_face_region", small_face_region);
 				skin_point = cex.update_bg(small_face_region);
-				cout << skin_point << endl;
 			}
 		}
 

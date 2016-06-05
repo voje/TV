@@ -10,10 +10,12 @@ class ColorExtractor{
 	bool full;
 	Point max_value;
 	int max_counter;
+	int color_margin;
 public:
 	Point update_bg(Mat &src);
 	Point BGR_to_bg(Vec3b BGR);
-	ColorExtractor(void);
+	Point get_max_square();
+	ColorExtractor(int);
 	Mat get_bg();
 	bool is_full();
 	void display_bg();

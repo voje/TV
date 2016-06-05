@@ -1,11 +1,14 @@
 #include "color_extractor.h"
 #include <iostream>
 
-ColorExtractor::ColorExtractor(){
-	bg = Mat::zeros(Size(100, 100), CV_16U);	// CV_U8 -> unsigned char	
+using namespace std;
+
+ColorExtractor::ColorExtractor(int cm){
+	bg = Mat::zeros(Size(100, 100), CV_16UC1);	// CV_U8 -> unsigned char	
 	full = false;
 	max_value = Point(-1, -1);
 	max_counter = 1000;
+	color_margin = cm;
 }
 
 Point ColorExtractor::BGR_to_bg(Vec3b BGR){
@@ -20,12 +23,32 @@ Point ColorExtractor::BGR_to_bg(Vec3b BGR){
 	return p;
 }
 
+Point ColorExtractor::get_max_square(){
+	//find area in bg with hightes values
+	//square size: (color_margin + 1 + color_margin)^2
+	int area_max = 0;
+	Point point_max = Point(-1, -1);
+	for(int i=color_margin; i<bg.rows-color_margin; i++){
+		for(int j=color_margin; j<bg.cols-color_margin; j++){
+			Mat square = bg(Range(i-color_margin, i+color_margin), Range(j-color_margin, j+color_margin));
+			Scalar sc = sum(square);
+			int s = sc[0];
+			if(s > area_max){
+				area_max = s;
+				point_max = Point(j, i);
+			}
+		}
+	}
+	return point_max;
+}
+
 Point ColorExtractor::update_bg(Mat &src){
 	//keep updating color space until there's one full column (most prominent color)
 	//return position of the full column when full
 	if(full){
 		return max_value;
 	}
+	cout << "extracting color" << endl;
 	for(int i=0; i<src.rows; i++){
 		for(int j=0; j<src.cols; j++){
 			Vec3b BGR = src.at<Vec3b>(Point(j, i));
@@ -41,6 +64,7 @@ Point ColorExtractor::update_bg(Mat &src){
 				counter += 1;
 			}else{
 				full = true;
+				//max_value = get_max_square();
 				max_value = p;
 			}
 			bg.at<int>(p) = counter;
@@ -56,7 +80,7 @@ Mat ColorExtractor::get_bg(){
 void ColorExtractor::display_bg(){
 	Mat bg_show;
 	bg.convertTo(bg_show, CV_8U);
-	imshow("bg_show", bg_show);
+	//imshow("bg_show", bg_show);
 }
 
 bool ColorExtractor::is_full(){
