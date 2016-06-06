@@ -4,11 +4,11 @@
 using namespace std;
 
 ColorExtractor::ColorExtractor(int cm){
-	bg = Mat::zeros(Size(100, 100), CV_16UC1);	// CV_U8 -> unsigned char	
-	full = false;
-	max_value = Point(-1, -1);
-	max_counter = 1000;
-	color_margin = cm;
+	this->bg = Mat::zeros(Size(100, 100), CV_16UC1);	// CV_U8 -> unsigned char	
+	this->full = false;
+	this->max_value = Point(-1, -1);
+	this->max_counter = 1000;
+	this->color_margin = cm;
 }
 
 Point ColorExtractor::BGR_to_bg(Vec3b BGR){

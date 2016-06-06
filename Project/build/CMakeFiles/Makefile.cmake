@@ -45,4 +45,5 @@ SET(CMAKE_MAKEFILE_PRODUCTS
 SET(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/detector.dir/DependInfo.cmake"
   "CMakeFiles/head_bob.dir/DependInfo.cmake"
+  "CMakeFiles/test_hand_tracker.dir/DependInfo.cmake"
   )

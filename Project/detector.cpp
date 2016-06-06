@@ -2,11 +2,13 @@
 #include <fstream>
 #include <string>
 #include <math.h>
-#include "opencv2/objdetect.hpp"
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
-#include "opencv2/opencv.hpp"
+#include <opencv2/objdetect.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/opencv.hpp>
+
 #include "color_extractor.h"
+#include "hand_tracker.h"
 
 using namespace std;
 using namespace cv;
@@ -101,16 +103,20 @@ int main(int argc, char** argv){
 	param.minSize = Size(20, 20);	//if you resize window, you need to reset these
 	param.maxSize = Size(100, 100);
 
-	Mat frame, g_frame;
-	//Mat mask_MOG2, foreground;
+	Mat frame, g_frame, skin_binary;
+	Mat mask_MOG2, foreground;
 	Mat morph_element = getStructuringElement( MORPH_ELLIPSE, Size(inp.morph_size, inp.morph_size), Point(floor(inp.morph_size/2)+1, floor(inp.morph_size/2)+1) );
 
+	//declarations
 	VideoCapture cap;
 	VideoWriter output_cap;
 	CascadeClassifier detector;
 	vector<Rect> found_faces;
 	ColorExtractor cex(inp.color_margin);
 	Point skin_point(-1, -1);
+	Rect face_rect(-1, -1, 0, 0); //x, y, width, height
+	HandTracker lh_tr("left");
+	HandTracker rh_tr("right");
 
 	//get input video
 	if(inp.input_file != "0"){
@@ -143,10 +149,8 @@ int main(int argc, char** argv){
 	}
 
 	//init background subtractor
-	/*
 	Ptr<BackgroundSubtractor> pMOG2;
 	pMOG2 = createBackgroundSubtractorMOG2();
-	*/
 
 	//init window
 	cout << "Press 'q' to quit." << endl;
@@ -176,20 +180,8 @@ int main(int argc, char** argv){
 		//preform necessary rotations
 		flip(frame, frame, 0); //1 flips around x axis
 
-		/*
-		//extract foreground
-		extract_foreground(frame, foreground, pMOG2);
-		*/
-
-		//detect skin
-		Mat skin_binary = Mat::zeros(frame.size(), CV_8U);
-		detect_skin(frame, skin_point, skin_binary, cex);
-
-		//GaussianBlur(skin_binary, skin_binary, Size(5, 5), 2);
-		erode(skin_binary, skin_binary, morph_element);
-		dilate(skin_binary, skin_binary, morph_element);
-		dilate(skin_binary, skin_binary, morph_element);
-		//dilate(skin_binary, skin_binary, morph_element);
+		//prepare additional matrices
+		skin_binary = Mat::zeros(frame.size(), CV_8U);
 
 		//face
 		cvtColor(frame, g_frame, CV_BGR2GRAY);
@@ -197,25 +189,54 @@ int main(int argc, char** argv){
 			detector.detectMultiScale(g_frame, found_faces, param.scaleFactor, param.minNeigh, param.flags, param.minSize, param.maxSize);
 			//display 1 found face
 			if(found_faces.size() > 0){
-				Point br = found_faces[0].br();
-				Point tl = found_faces[0].tl();
+				face_rect = found_faces[0];
+				Point br = face_rect.br();
+				Point tl = face_rect.tl();
 				int yresizer = floor((br.y-tl.y)/5);
 				int xresizer = floor((br.x-tl.x)/5);
-				rectangle(frame, br, tl, Scalar(0, 255, 0), 2, 8, 0);	
-				rectangle(skin_binary, br, tl, Scalar(0, 255, 0), 2, 8, 0);	
 				Mat small_face_region = frame(Range(tl.y+yresizer, br.y-yresizer), Range(tl.x+xresizer, br.x-xresizer));		
 				//imshow("small_face_region", small_face_region);
 				skin_point = cex.update_bg(small_face_region);
 			}
 		}
 
+		//extract foreground - uncomment for better detection with slower performance
+		//extract_foreground(frame, foreground, pMOG2);
+
+		//detect skin
+		detect_skin(frame, skin_point, skin_binary, cex);	//optionally use foreground instead of frame
+		//GaussianBlur(skin_binary, skin_binary, Size(5, 5), 2);
+		erode(skin_binary, skin_binary, morph_element);
+		dilate(skin_binary, skin_binary, morph_element);
+		dilate(skin_binary, skin_binary, morph_element);
+		//dilate(skin_binary, skin_binary, morph_element);
+
+		//find hands
+		lh_tr.find_hand(skin_binary, face_rect);
+		rh_tr.find_hand(skin_binary, face_rect);
+
+		//create a binary image with 3 channels
+		Mat skin_binary3;
+		cvtColor(skin_binary, skin_binary3, CV_GRAY2BGR);
+
+		//draw found objects
+		rectangle(skin_binary3, face_rect.br(), face_rect.tl(), Scalar(0, 255, 0), 2, 8, 0);	
+		//rectangle(frame, face_rect.br(), face_rect.tl(), Scalar(0, 255, 0), 2, 8, 0);	
+		circle(skin_binary3, lh_tr.get_point(), 10, Scalar(255, 0, 0), 2);
+		circle(skin_binary3, rh_tr.get_point(), 10, Scalar(0, 0, 255), 2);
+
 		//imshow("detect_faces", frame);		
         //imshow("foreground", foreground);
-		imshow("skin", skin_binary);
+		imshow("skin", skin_binary3);
 		cex.display_bg();
 		
 		char c = waitKey(inp.key_wait);
-		if(c == 'q') break;
+		if(c == 'q'){
+			break;
+		}
+		else if(c == 'p'){
+			imwrite("../sample_pictures/capture0.jpg", skin_binary);
+		}
 	}	
 
 	cap.release();

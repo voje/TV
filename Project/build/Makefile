@@ -124,6 +124,19 @@ head_bob/fast:
 	$(MAKE) -f CMakeFiles/head_bob.dir/build.make CMakeFiles/head_bob.dir/build
 .PHONY : head_bob/fast
 
+#=============================================================================
+# Target rules for targets named test_hand_tracker
+
+# Build rule for target.
+test_hand_tracker: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_hand_tracker
+.PHONY : test_hand_tracker
+
+# fast build rule for target.
+test_hand_tracker/fast:
+	$(MAKE) -f CMakeFiles/test_hand_tracker.dir/build.make CMakeFiles/test_hand_tracker.dir/build
+.PHONY : test_hand_tracker/fast
+
 color_extractor.o: color_extractor.cpp.o
 .PHONY : color_extractor.o
 
@@ -172,6 +185,33 @@ detector.cpp.s:
 	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/detector.cpp.s
 .PHONY : detector.cpp.s
 
+hand_tracker.o: hand_tracker.cpp.o
+.PHONY : hand_tracker.o
+
+# target to build an object file
+hand_tracker.cpp.o:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/hand_tracker.cpp.o
+	$(MAKE) -f CMakeFiles/test_hand_tracker.dir/build.make CMakeFiles/test_hand_tracker.dir/hand_tracker.cpp.o
+.PHONY : hand_tracker.cpp.o
+
+hand_tracker.i: hand_tracker.cpp.i
+.PHONY : hand_tracker.i
+
+# target to preprocess a source file
+hand_tracker.cpp.i:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/hand_tracker.cpp.i
+	$(MAKE) -f CMakeFiles/test_hand_tracker.dir/build.make CMakeFiles/test_hand_tracker.dir/hand_tracker.cpp.i
+.PHONY : hand_tracker.cpp.i
+
+hand_tracker.s: hand_tracker.cpp.s
+.PHONY : hand_tracker.s
+
+# target to generate assembly for a file
+hand_tracker.cpp.s:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/hand_tracker.cpp.s
+	$(MAKE) -f CMakeFiles/test_hand_tracker.dir/build.make CMakeFiles/test_hand_tracker.dir/hand_tracker.cpp.s
+.PHONY : hand_tracker.cpp.s
+
 head_bob.o: head_bob.cpp.o
 .PHONY : head_bob.o
 
@@ -196,6 +236,30 @@ head_bob.cpp.s:
 	$(MAKE) -f CMakeFiles/head_bob.dir/build.make CMakeFiles/head_bob.dir/head_bob.cpp.s
 .PHONY : head_bob.cpp.s
 
+test_hand_tracker.o: test_hand_tracker.cpp.o
+.PHONY : test_hand_tracker.o
+
+# target to build an object file
+test_hand_tracker.cpp.o:
+	$(MAKE) -f CMakeFiles/test_hand_tracker.dir/build.make CMakeFiles/test_hand_tracker.dir/test_hand_tracker.cpp.o
+.PHONY : test_hand_tracker.cpp.o
+
+test_hand_tracker.i: test_hand_tracker.cpp.i
+.PHONY : test_hand_tracker.i
+
+# target to preprocess a source file
+test_hand_tracker.cpp.i:
+	$(MAKE) -f CMakeFiles/test_hand_tracker.dir/build.make CMakeFiles/test_hand_tracker.dir/test_hand_tracker.cpp.i
+.PHONY : test_hand_tracker.cpp.i
+
+test_hand_tracker.s: test_hand_tracker.cpp.s
+.PHONY : test_hand_tracker.s
+
+# target to generate assembly for a file
+test_hand_tracker.cpp.s:
+	$(MAKE) -f CMakeFiles/test_hand_tracker.dir/build.make CMakeFiles/test_hand_tracker.dir/test_hand_tracker.cpp.s
+.PHONY : test_hand_tracker.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -206,15 +270,22 @@ help:
 	@echo "... edit_cache"
 	@echo "... head_bob"
 	@echo "... rebuild_cache"
+	@echo "... test_hand_tracker"
 	@echo "... color_extractor.o"
 	@echo "... color_extractor.i"
 	@echo "... color_extractor.s"
 	@echo "... detector.o"
 	@echo "... detector.i"
 	@echo "... detector.s"
+	@echo "... hand_tracker.o"
+	@echo "... hand_tracker.i"
+	@echo "... hand_tracker.s"
 	@echo "... head_bob.o"
 	@echo "... head_bob.i"
 	@echo "... head_bob.s"
+	@echo "... test_hand_tracker.o"
+	@echo "... test_hand_tracker.i"
+	@echo "... test_hand_tracker.s"
 .PHONY : help
 
 

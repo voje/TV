@@ -1,7 +1,7 @@
 #ifndef _MY_COLOR_EXTRACTOR_
 #define _MY_COLOR_EXTRACTOR_
 
-#include "opencv2/opencv.hpp"
+#include <opencv2/opencv.hpp>
 
 using namespace cv;
 

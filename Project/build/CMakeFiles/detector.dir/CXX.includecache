@@ -8,7 +8,7 @@
 
 /home/kristjan/FRI/TV/Project/color_extractor.h
 opencv2/opencv.hpp
-/home/kristjan/FRI/TV/Project/opencv2/opencv.hpp
+-
 
 /home/kristjan/FRI/TV/Project/detector.cpp
 iostream
@@ -20,15 +20,21 @@ string
 math.h
 -
 opencv2/objdetect.hpp
-/home/kristjan/FRI/TV/Project/opencv2/objdetect.hpp
+-
 opencv2/highgui.hpp
-/home/kristjan/FRI/TV/Project/opencv2/highgui.hpp
+-
 opencv2/imgproc.hpp
-/home/kristjan/FRI/TV/Project/opencv2/imgproc.hpp
+-
 opencv2/opencv.hpp
-/home/kristjan/FRI/TV/Project/opencv2/opencv.hpp
+-
 color_extractor.h
 /home/kristjan/FRI/TV/Project/color_extractor.h
+hand_tracker.h
+/home/kristjan/FRI/TV/Project/hand_tracker.h
+
+/home/kristjan/FRI/TV/Project/hand_tracker.h
+opencv2/opencv.hpp
+-
 
 /usr/local/include/opencv/cxcore.h
 opencv2/core/core_c.h
