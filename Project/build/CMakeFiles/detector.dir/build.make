@@ -118,11 +118,35 @@ CMakeFiles/detector.dir/hand_tracker.cpp.o.provides: CMakeFiles/detector.dir/han
 
 CMakeFiles/detector.dir/hand_tracker.cpp.o.provides.build: CMakeFiles/detector.dir/hand_tracker.cpp.o
 
+CMakeFiles/detector.dir/gesture_tracker.cpp.o: CMakeFiles/detector.dir/flags.make
+CMakeFiles/detector.dir/gesture_tracker.cpp.o: ../gesture_tracker.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/kristjan/FRI/TV/Project/build/CMakeFiles $(CMAKE_PROGRESS_4)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/detector.dir/gesture_tracker.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/detector.dir/gesture_tracker.cpp.o -c /home/kristjan/FRI/TV/Project/gesture_tracker.cpp
+
+CMakeFiles/detector.dir/gesture_tracker.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/detector.dir/gesture_tracker.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/kristjan/FRI/TV/Project/gesture_tracker.cpp > CMakeFiles/detector.dir/gesture_tracker.cpp.i
+
+CMakeFiles/detector.dir/gesture_tracker.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/detector.dir/gesture_tracker.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/kristjan/FRI/TV/Project/gesture_tracker.cpp -o CMakeFiles/detector.dir/gesture_tracker.cpp.s
+
+CMakeFiles/detector.dir/gesture_tracker.cpp.o.requires:
+.PHONY : CMakeFiles/detector.dir/gesture_tracker.cpp.o.requires
+
+CMakeFiles/detector.dir/gesture_tracker.cpp.o.provides: CMakeFiles/detector.dir/gesture_tracker.cpp.o.requires
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/gesture_tracker.cpp.o.provides.build
+.PHONY : CMakeFiles/detector.dir/gesture_tracker.cpp.o.provides
+
+CMakeFiles/detector.dir/gesture_tracker.cpp.o.provides.build: CMakeFiles/detector.dir/gesture_tracker.cpp.o
+
 # Object files for target detector
 detector_OBJECTS = \
 "CMakeFiles/detector.dir/detector.cpp.o" \
 "CMakeFiles/detector.dir/color_extractor.cpp.o" \
-"CMakeFiles/detector.dir/hand_tracker.cpp.o"
+"CMakeFiles/detector.dir/hand_tracker.cpp.o" \
+"CMakeFiles/detector.dir/gesture_tracker.cpp.o"
 
 # External object files for target detector
 detector_EXTERNAL_OBJECTS =
@@ -130,6 +154,7 @@ detector_EXTERNAL_OBJECTS =
 detector: CMakeFiles/detector.dir/detector.cpp.o
 detector: CMakeFiles/detector.dir/color_extractor.cpp.o
 detector: CMakeFiles/detector.dir/hand_tracker.cpp.o
+detector: CMakeFiles/detector.dir/gesture_tracker.cpp.o
 detector: CMakeFiles/detector.dir/build.make
 detector: /usr/local/lib/libopencv_xphoto.so.3.1.0
 detector: /usr/local/lib/libopencv_xobjdetect.so.3.1.0
@@ -198,6 +223,7 @@ CMakeFiles/detector.dir/build: detector
 CMakeFiles/detector.dir/requires: CMakeFiles/detector.dir/detector.cpp.o.requires
 CMakeFiles/detector.dir/requires: CMakeFiles/detector.dir/color_extractor.cpp.o.requires
 CMakeFiles/detector.dir/requires: CMakeFiles/detector.dir/hand_tracker.cpp.o.requires
+CMakeFiles/detector.dir/requires: CMakeFiles/detector.dir/gesture_tracker.cpp.o.requires
 .PHONY : CMakeFiles/detector.dir/requires
 
 CMakeFiles/detector.dir/clean:

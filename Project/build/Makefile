@@ -185,6 +185,30 @@ detector.cpp.s:
 	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/detector.cpp.s
 .PHONY : detector.cpp.s
 
+gesture_tracker.o: gesture_tracker.cpp.o
+.PHONY : gesture_tracker.o
+
+# target to build an object file
+gesture_tracker.cpp.o:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/gesture_tracker.cpp.o
+.PHONY : gesture_tracker.cpp.o
+
+gesture_tracker.i: gesture_tracker.cpp.i
+.PHONY : gesture_tracker.i
+
+# target to preprocess a source file
+gesture_tracker.cpp.i:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/gesture_tracker.cpp.i
+.PHONY : gesture_tracker.cpp.i
+
+gesture_tracker.s: gesture_tracker.cpp.s
+.PHONY : gesture_tracker.s
+
+# target to generate assembly for a file
+gesture_tracker.cpp.s:
+	$(MAKE) -f CMakeFiles/detector.dir/build.make CMakeFiles/detector.dir/gesture_tracker.cpp.s
+.PHONY : gesture_tracker.cpp.s
+
 hand_tracker.o: hand_tracker.cpp.o
 .PHONY : hand_tracker.o
 
@@ -277,6 +301,9 @@ help:
 	@echo "... detector.o"
 	@echo "... detector.i"
 	@echo "... detector.s"
+	@echo "... gesture_tracker.o"
+	@echo "... gesture_tracker.i"
+	@echo "... gesture_tracker.s"
 	@echo "... hand_tracker.o"
 	@echo "... hand_tracker.i"
 	@echo "... hand_tracker.s"

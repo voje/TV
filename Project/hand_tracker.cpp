@@ -27,7 +27,11 @@ void HandTracker::find_hand(Mat &frame, Rect &face_rect){
 	if(face_rect.tl().x == -1){
 		face_mid_x = floor(frame.cols/2);
 	}else{
-		face_mid_x = floor((face_rect.tl().x + face_rect.br().x)/2);
+		if(this->is_left()){
+			face_mid_x = face_rect.tl().x;
+		}else{
+			face_mid_x = face_rect.br().x; 
+		}
 	}
 
 	//create submat, left/right of face_rect
@@ -80,7 +84,7 @@ void HandTracker::find_hand(Mat &frame, Rect &face_rect){
 	Point vector(0, 0);
 	vector -= old_point;
 	vector += hand_point;
-	double factor = 0.5;
+	double factor = 0.7;
 	vector.x = floor(vector.x * factor);
 	vector.y = floor(vector.y * factor);
 	hand_point = old_point + vector;
