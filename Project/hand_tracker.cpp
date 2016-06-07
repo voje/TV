@@ -6,7 +6,7 @@ using namespace cv;
 HandTracker::HandTracker(string name){
 	this->name = name;
 	this->hand_point = Point(-1, -1);
-	this->search_radius = 25;
+	this->search_radius = 10;
 }
 
 bool HandTracker::is_left(){
@@ -72,10 +72,20 @@ void HandTracker::find_hand(Mat &frame, Rect &face_rect){
 	}
 
 	//translate point back to original frame
-	this->hand_point = max_center;
+	Point old_point = this->hand_point;
+	hand_point = max_center;
 	if(!this->is_left()){
 		hand_point.x += face_mid_x;
 	}
+	Point vector(0, 0);
+	vector -= old_point;
+	vector += hand_point;
+	double factor = 0.5;
+	vector.x = floor(vector.x * factor);
+	vector.y = floor(vector.y * factor);
+	hand_point = old_point + vector;
+	//cout << old_point << " -> " << hand_point << " : ";
+	//cout << vector << endl;
 
 	//testing
 	//cout << frame.type() << endl; //8UC3

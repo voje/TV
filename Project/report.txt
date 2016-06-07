@@ -10,12 +10,12 @@ Removed background from image. Trying to speed up face detection. Next step: det
 time: 3h.
 
 New plan:
-	- detect face (done)
-	- after first detection, reduce search window, to increase detection speed (done, doesn't help much)
-	- extract foreground (done)
-	- detect hands using skin color (in progress)
+	- detect face (done) (0h)
+	- after first detection, reduce search window, to increase detection speed (done, doesn't help much) (3h)
+	- extract foreground (done) (2h)
+	- detect hands using skin color
 	Problem with a t-shirt: the whole forearm is detected. I will take head and detect palm as the furthest point from head.
-	- possible imporovement: detect hsv ranges from detected head.
-	- object MovementTracker tracks changes in face y position and hands x and y position (5 dimensions). Face x is omitted to speed up the recognition of gestures.
+        Created a HandTracker class that finds hand based on a binary image, left and right from head. (done) 6h
+	- object MovementTracker tracks changes in face y position and hands x and y position (5 dimensions). Face x is omitted to speed up the recognition of gestures. (todo)
 
 

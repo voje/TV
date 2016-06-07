@@ -67,7 +67,7 @@ void detect_skin(Mat &frame, Point &skin_point, Mat &bin, ColorExtractor cex){
 
 void read_parameters(input_param &p){
 	ifstream ifs;	
-	ifs.open("detector.conf");
+	ifs.open("../detector.conf");
 	string skip, value;
 	ifs >> skip >> value; p.key_wait = atoi(value.c_str());
 	ifs >> skip >> value; p.input_file = value;
