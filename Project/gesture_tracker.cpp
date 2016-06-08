@@ -17,12 +17,16 @@ Height of area [2 5]: rest of frame.
 
 */
 
-GestureTracker::GestureTracker(int delay){
+enum fields{TL, ML, BL, TR, MR, BR};	//top left, ...
+
+GestureTracker::GestureTracker(int delay, int head_dy_min){
 	this->running = false;
+	this->run_toggle = false;	//send run action only when toggled
 	this->head_old_y = -1;
-	this->head_percent = 0.02;
+	this->head_old_dy = -1;
 	this->head_running_vote = 0;
 	this->head_standing_vote = 0;
+	this->head_dy_min = head_dy_min;
 	this->l_hand = -1;
 	this->l_hand_vote = 0;
 	this->r_hand = -1;
@@ -33,48 +37,52 @@ GestureTracker::GestureTracker(int delay){
 void GestureTracker::update(Rect face_rect, Point l_hand, Point r_hand, Mat &frame){
 
 	//update head
-	//set a margin for head bobbing, relative to frame height. say 2% or something (test it)
-	int y_diff = floor(frame.rows * head_percent);
+	int y_diff = head_dy_min;	//how many pixels counts as a head move?
 	int head_y = face_rect.tl().y;
 	//if not initialized
 	if(head_old_y == -1){
 		head_old_y = head_y;
 		return;
 	}
-	int dy = abs(head_old_y - head_y);
+	int head_dy = head_y - head_old_y;
 	if(!running){
-		if(dy > y_diff){
+		if(abs(head_dy) > y_diff){
 			head_running_vote += 1;
 		}else{
 			head_running_vote = 0;
 		}
 	}else if(running){
-		if( dy > y_diff){
+		if(abs(head_dy) > y_diff){
 			head_standing_vote = 0;
 		}else{
 			head_standing_vote +=1;
 		}
 	}
-	if(head_running_vote >= delay){
+	if(head_running_vote >= delay){	//extra check for false positives
 		running = true;
+		std::cout << "running" << std::endl;
+		run_toggle = true;
 		head_running_vote = 0;
 	}
 	if(head_standing_vote >= delay){
 		running = false;
+		std::cout << "standing" << std::endl;
+		run_toggle = true;
 		head_standing_vote = 0;
 	}
+	head_old_y = head_y;
+	head_old_dy = head_dy;
 
 	int mid_height = floor(0.2*frame.rows);
-
 	//update l_hand
 	int ly = l_hand.y;
 	int l_hand_new;
 	if(ly < head_y){
-		l_hand_new = 1;
+		l_hand_new = TL;
 	}else if(ly < head_y + mid_height){
-		l_hand_new = 2;
+		l_hand_new = ML;
 	}else{
-		l_hand_new = 3;
+		l_hand_new = BL;
 	}
 
 	if(l_hand_new != this->l_hand){
@@ -92,11 +100,11 @@ void GestureTracker::update(Rect face_rect, Point l_hand, Point r_hand, Mat &fra
 	int ry = r_hand.y;
 	int r_hand_new;
 	if(ry < head_y){
-		r_hand_new = 4;
+		r_hand_new = TR;
 	}else if(ry < head_y + mid_height){
-		r_hand_new = 5;	
+		r_hand_new = MR;	
 	}else{
-		r_hand_new = 6;
+		r_hand_new = BR;
 	}
 
 	if(r_hand_new != this->r_hand){
@@ -112,11 +120,21 @@ void GestureTracker::update(Rect face_rect, Point l_hand, Point r_hand, Mat &fra
 
 }//update
 
-int GestureTracker::get_state(){
+void GestureTracker::take_action(){
+	//uses key_press.sh to take an action
 	if(l_hand == -1 || r_hand == -1){
-		return -1;
+		return;
 	}	
-	//todo: write all possible states
+
+	//handle run toggle
+	if(run_toggle){
+		if(running){
+			system("bash ../key_press.sh RUN_ON");
+		}else{
+			system("bash ../key_press.sh RUN_OFF");
+		}
+		run_toggle = false;
+	}
 }
 
 

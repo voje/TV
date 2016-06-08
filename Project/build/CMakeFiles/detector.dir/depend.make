@@ -59,6 +59,7 @@ CMakeFiles/detector.dir/color_extractor.cpp.o: /usr/local/include/opencv2/xfeatu
 
 CMakeFiles/detector.dir/detector.cpp.o: ../color_extractor.h
 CMakeFiles/detector.dir/detector.cpp.o: ../detector.cpp
+CMakeFiles/detector.dir/detector.cpp.o: ../gesture_tracker.h
 CMakeFiles/detector.dir/detector.cpp.o: ../hand_tracker.h
 CMakeFiles/detector.dir/detector.cpp.o: /usr/local/include/opencv/cxcore.h
 CMakeFiles/detector.dir/detector.cpp.o: /usr/local/include/opencv2/calib3d.hpp

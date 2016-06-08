@@ -1,6 +1,15 @@
 #!bin/bash
-if [[ $2 == "down" ]]; then
-    xdotool keydown $1
-elif [[ $2 == "up" ]]; then
-    xdotool keyup $1
-fi
+
+#modify key bindings in this script
+
+case "$1" in
+	"RUN_ON")
+		echo "start running"
+		;;
+	"RUN_OFF")
+		echo "stop running"
+		;;
+	*)
+		echo "error: Undefined command."
+		;;
+esac

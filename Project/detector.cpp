@@ -9,6 +9,7 @@
 
 #include "color_extractor.h"
 #include "hand_tracker.h"
+#include "gesture_tracker.h"
 
 using namespace std;
 using namespace cv;
@@ -32,23 +33,9 @@ struct input_param{
 	int morph_size;		//morphological object size
 	int color_margin;	//how far around skin point do we search in bg space
 	int window_size_cols;	//resize frame after captzre (speed up the process)
+	int gest_delay;
+	int head_dy_min;
 } static inp;
-
-/* 
-bool is_skin(Vec3d &bgr){
-	//equations from a scientific paper - not working
-	Vec3d zero_div(1.0e-9, 1.0e-9, 1.0e-9);
-	//bgr += zero_div;
-	double sum = bgr[0] + bgr[1] + bgr[2];
-	bgr /= sum;
-	if( abs(atan(bgr[0]/bgr[2])-M_PI/4) < M_PI/8 &&
-		abs(atan(bgr[1]/bgr[2])-M_PI/6) < M_PI/18 &&
-		abs(atan(bgr[0]/bgr[1])-M_PI/5) < M_PI/15 ){
-		return true;	
-	}
-	return false;
-}
-*/
 
 void detect_skin(Mat &frame, Point &skin_point, Mat &bin, ColorExtractor cex){
 	for(int i=0; i<bin.rows; i++){
@@ -77,6 +64,8 @@ void read_parameters(input_param &p){
 	ifs >> skip >> value; p.morph_size = atoi(value.c_str());
 	ifs >> skip >> value; p.color_margin = atoi(value.c_str());
 	ifs >> skip >> value; p.window_size_cols = atoi(value.c_str());
+	ifs >> skip >> value; p.gest_delay = atoi(value.c_str());
+	ifs >> skip >> value; p.head_dy_min = atoi(value.c_str());
 }
 
 void extract_foreground(Mat original, Mat &foreground, Ptr<BackgroundSubtractor> bs){
@@ -117,6 +106,7 @@ int main(int argc, char** argv){
 	Rect face_rect(-1, -1, 0, 0); //x, y, width, height
 	HandTracker lh_tr("left");
 	HandTracker rh_tr("right");
+	GestureTracker gest(inp.gest_delay, inp.head_dy_min);
 
 	//get input video
 	if(inp.input_file != "0"){
@@ -224,6 +214,10 @@ int main(int argc, char** argv){
 		//rectangle(frame, face_rect.br(), face_rect.tl(), Scalar(0, 255, 0), 2, 8, 0);	
 		circle(skin_binary3, lh_tr.get_point(), 10, Scalar(255, 0, 0), 2);
 		circle(skin_binary3, rh_tr.get_point(), 10, Scalar(0, 0, 255), 2);
+
+		//gesture tracking
+		gest.update(face_rect, lh_tr.get_point(), rh_tr.get_point(), frame);
+		gest.take_action();
 
 		//imshow("detect_faces", frame);		
         //imshow("foreground", foreground);

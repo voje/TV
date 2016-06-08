@@ -60,6 +60,7 @@ CMakeFiles/detector.dir/color_extractor.cpp.o
 CMakeFiles/detector.dir/detector.cpp.o
  /home/kristjan/FRI/TV/Project/color_extractor.h
  /home/kristjan/FRI/TV/Project/detector.cpp
+ /home/kristjan/FRI/TV/Project/gesture_tracker.h
  /home/kristjan/FRI/TV/Project/hand_tracker.h
  /usr/local/include/opencv/cxcore.h
  /usr/local/include/opencv2/calib3d.hpp

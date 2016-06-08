@@ -5,8 +5,10 @@
 
 class GestureTracker{
 	bool running;
+	bool run_toggle;
 	int head_old_y;
-	double head_percent;
+	int head_old_dy;
+	double head_dy_min;
 	int head_running_vote;
 	int head_standing_vote;
 	int l_hand;
@@ -15,9 +17,9 @@ class GestureTracker{
 	int r_hand_vote;
 	int delay;
 public:
-	GestureTracker(int);	
+	GestureTracker(int, int);	
 	void update(cv::Rect, cv::Point, cv::Point, cv::Mat&);
-	int get_state();
+	void take_action();
 };
 
 #endif
