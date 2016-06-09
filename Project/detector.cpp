@@ -145,6 +145,7 @@ int main(int argc, char** argv){
 
 	//init window
 	namedWindow("binary_image", WINDOW_NORMAL);
+	namedWindow("cap", WINDOW_NORMAL);
 	cout << "Press 'q' to quit." << endl;
 
 	//wait 5 seconds
@@ -224,9 +225,9 @@ int main(int argc, char** argv){
 
 		//gesture tracking
 		gest.update(face_rect, lh_tr.get_point(), rh_tr.get_point(), frame);
-		gest.take_action();
+		gest.take_action();	//simulate pressing keys
 
-		//imshow("detect_faces", frame);		
+		imshow("cap", frame);		
         //imshow("foreground", foreground);
         gest.draw_grid(skin_binary3, face_rect);
 		imshow("binary_image", skin_binary3);

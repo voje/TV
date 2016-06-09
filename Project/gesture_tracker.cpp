@@ -40,7 +40,7 @@ void GestureTracker::update(Rect face_rect, Point l_hand, Point r_hand, Mat &fra
 
 	//update head
 	int y_diff = head_dy_min;	//how many pixels counts as a head move?
-	int head_y = face_rect.tl().y;
+	int head_y = floor( (face_rect.tl().y + face_rect.br().y) / 2);
 	//if not initialized
 	if(head_old_y == -1){
 		head_old_y = head_y;
@@ -75,7 +75,7 @@ void GestureTracker::update(Rect face_rect, Point l_hand, Point r_hand, Mat &fra
 	head_old_y = head_y;
 	head_old_dy = head_dy;
 
-	int mid_height = floor(0.2*frame.rows);
+	int mid_height = floor(0.3*frame.rows);
 	//update l_hand
 	int ly = l_hand.y;
 	int l_hand_new;
@@ -155,9 +155,10 @@ void GestureTracker::take_action(){
 
 void GestureTracker::draw_grid(Mat &frame, Rect face_rect){
 	//void line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
-	int mid_height = floor(0.2*frame.rows);
-	line(frame, Point(0, face_rect.tl().y), Point(frame.cols, face_rect.tl().y), Scalar(69, 0, 255));
-	line(frame, Point(0, face_rect.tl().y+mid_height), Point(frame.cols, face_rect.tl().y+mid_height), Scalar(69, 0, 255));
+	int mid_height = floor(0.3*frame.rows);
+	int head_y = floor( (face_rect.tl().y + face_rect.br().y) / 2);
+	line(frame, Point(0, head_y), Point(frame.cols, head_y), Scalar(69, 0, 255));
+	line(frame, Point(0, head_y+mid_height), Point(frame.cols, head_y+mid_height), Scalar(69, 0, 255));
 }
 
 

@@ -4,8 +4,12 @@
 # xdotool key / keydown / keyup
 # wmctrl -R <window_name>
 
+simulate=false
 target_window_name="warcraft"
 
+if $simulate; then
+	target_window_name="kristjan"	#going for terminal
+fi
 wmctrl -R "$target_window_name"
 
 case "$1" in

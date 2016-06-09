@@ -6,7 +6,7 @@ using namespace cv;
 HandTracker::HandTracker(string name){
 	this->name = name;
 	this->hand_point = Point(-1, -1);
-	this->search_radius = 10;
+	this->search_radius = 2;
 }
 
 bool HandTracker::is_left(){
@@ -45,33 +45,29 @@ void HandTracker::find_hand(Mat &frame, Rect &face_rect){
 	//find a dense area, traverse to the leftmost/rightmost point
 	int r = this->search_radius;
 	double area = -1;
-	double weight = 1;
-	double weight_step = weight/(submat.cols*2);
 	Point max_center(-1, -1);
 
 	if(this->is_left()){
 		for(int j=r; j<submat.cols-r; j++){
 			for(int i=r; i<submat.rows-r; i++){
 				Scalar ssuma = sum(submat(Range(i-r, i+r), Range(j-r, j+r)));
-				double suma = ssuma[0]*weight;
+				double suma = ssuma[0]*(submat.cols - j);
 				if(suma > area){
 					area = suma;
 					max_center = Point(j, i);
 				}
 			}
-			weight -= weight_step;
 		}
 	}else{
 		for(int j=submat.cols-r; j>=r; j--){
 			for(int i=r; i<submat.rows-r; i++){
 				Scalar ssuma = sum(submat(Range(i-r, i+r), Range(j-r, j+r)));
-				double suma = ssuma[0]*weight;
+				double suma = ssuma[0]*j;
 				if(suma > area){
 					area = suma;
 					max_center = Point(j, i);
 				}
 			}
-			weight -= weight_step;
 		}
 	}
 
