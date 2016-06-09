@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <math.h>
+#include <unistd.h>
 #include <opencv2/objdetect.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
@@ -143,7 +144,13 @@ int main(int argc, char** argv){
 	pMOG2 = createBackgroundSubtractorMOG2();
 
 	//init window
+	namedWindow("binary_image", WINDOW_NORMAL);
 	cout << "Press 'q' to quit." << endl;
+
+	//wait 5 seconds
+	cout << "Set focus on desired window and position yourself." << endl;
+	usleep(5000000);
+	cout << "Starting capture.";
 
 	for(;;){
 		cap >> frame;
@@ -221,7 +228,8 @@ int main(int argc, char** argv){
 
 		//imshow("detect_faces", frame);		
         //imshow("foreground", foreground);
-		imshow("skin", skin_binary3);
+        gest.draw_grid(skin_binary3, face_rect);
+		imshow("binary_image", skin_binary3);
 		cex.display_bg();
 		
 		char c = waitKey(inp.key_wait);

@@ -32,6 +32,8 @@ GestureTracker::GestureTracker(int delay, int head_dy_min){
 	this->r_hand = -1;
 	this->r_hand_vote = 0;
 	this->delay = delay;
+	this->turning_left = false;
+	this->turning_right = false;
 }
 
 void GestureTracker::update(Rect face_rect, Point l_hand, Point r_hand, Mat &frame){
@@ -135,6 +137,27 @@ void GestureTracker::take_action(){
 		}
 		run_toggle = false;
 	}
+	if(l_hand == TL && r_hand == BR && !turning_left && !turning_right){
+		turning_left = true;
+		system("bash ../key_press.sh TURN_LEFT_ON");
+	}else if(l_hand != TL && turning_left){
+		turning_left = false;
+		system("bash ../key_press.sh TURN_LEFT_OFF");
+	}
+	if(l_hand == BL && r_hand == TR && !turning_left && !turning_right){
+		turning_right = true;
+		system("bash ../key_press.sh TURN_RIGHT_ON");
+	}else if(r_hand != TR && turning_right){
+		turning_right = false;
+		system("bash ../key_press.sh TURN_RIGHT_OFF");
+	}
+}
+
+void GestureTracker::draw_grid(Mat &frame, Rect face_rect){
+	//void line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
+	int mid_height = floor(0.2*frame.rows);
+	line(frame, Point(0, face_rect.tl().y), Point(frame.cols, face_rect.tl().y), Scalar(69, 0, 255));
+	line(frame, Point(0, face_rect.tl().y+mid_height), Point(frame.cols, face_rect.tl().y+mid_height), Scalar(69, 0, 255));
 }
 
 

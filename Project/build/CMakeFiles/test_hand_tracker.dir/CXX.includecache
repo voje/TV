@@ -14,10 +14,6 @@ hand_tracker.h
 opencv2/opencv.hpp
 -
 
-/home/kristjan/FRI/TV/Project/test_hand_tracker.cpp
-hand_tracker.h
-/home/kristjan/FRI/TV/Project/hand_tracker.h
-
 /usr/local/include/opencv/cxcore.h
 opencv2/core/core_c.h
 /usr/local/include/opencv/opencv2/core/core_c.h

@@ -16,10 +16,13 @@ class GestureTracker{
 	int r_hand;
 	int r_hand_vote;
 	int delay;
+	bool turning_left;
+	bool turning_right;
 public:
 	GestureTracker(int, int);	
 	void update(cv::Rect, cv::Point, cv::Point, cv::Mat&);
 	void take_action();
+	void draw_grid(cv::Mat&, cv::Rect);
 };
 
 #endif
