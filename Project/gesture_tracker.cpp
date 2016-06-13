@@ -62,13 +62,13 @@ void GestureTracker::update(Rect face_rect, Point l_hand, Point r_hand, Mat &fra
 	}
 	if(head_running_vote >= delay){	//extra check for false positives
 		running = true;
-		std::cout << "running" << std::endl;
+		//std::cout << "running" << std::endl;
 		run_toggle = true;
 		head_running_vote = 0;
 	}
 	if(head_standing_vote >= delay){
 		running = false;
-		std::cout << "standing" << std::endl;
+		//std::cout << "standing" << std::endl;
 		run_toggle = true;
 		head_standing_vote = 0;
 	}
@@ -127,6 +127,9 @@ void GestureTracker::take_action(){
 	if(l_hand == -1 || r_hand == -1){
 		return;
 	}	
+	if(l_hand == TL && r_hand == TR){
+		return;
+	}
 
 	//handle run toggle
 	if(run_toggle){

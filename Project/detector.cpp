@@ -36,6 +36,7 @@ struct input_param{
 	int window_size_cols;	//resize frame after captzre (speed up the process)
 	int gest_delay;
 	int head_dy_min;
+	int extract_foreground;
 } static inp;
 
 void detect_skin(Mat &frame, Point &skin_point, Mat &bin, ColorExtractor cex){
@@ -67,6 +68,7 @@ void read_parameters(input_param &p){
 	ifs >> skip >> value; p.window_size_cols = atoi(value.c_str());
 	ifs >> skip >> value; p.gest_delay = atoi(value.c_str());
 	ifs >> skip >> value; p.head_dy_min = atoi(value.c_str());
+	ifs >> skip >> value; p.extract_foreground= atoi(value.c_str());
 }
 
 void extract_foreground(Mat original, Mat &foreground, Ptr<BackgroundSubtractor> bs){
@@ -178,6 +180,11 @@ int main(int argc, char** argv){
 		//preform necessary rotations
 		flip(frame, frame, 0); //1 flips around x axis
 
+		//if enabled, start extracting foreground after the color is extracted from face
+		if(inp.extract_foreground && cex.is_full()){
+			extract_foreground(frame, frame, pMOG2);
+		}
+
 		//prepare additional matrices
 		skin_binary = Mat::zeros(frame.size(), CV_8U);
 
@@ -197,9 +204,6 @@ int main(int argc, char** argv){
 				skin_point = cex.update_bg(small_face_region);
 			}
 		}
-
-		//extract foreground - uncomment for better detection with slower performance
-		//extract_foreground(frame, foreground, pMOG2);
 
 		//detect skin
 		detect_skin(frame, skin_point, skin_binary, cex);	//optionally use foreground instead of frame

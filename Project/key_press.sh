@@ -4,7 +4,7 @@
 # xdotool key / keydown / keyup
 # wmctrl -R <window_name>
 
-simulate=false
+simulate=true
 target_window_name="warcraft"
 
 if $simulate; then
