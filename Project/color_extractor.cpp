@@ -3,12 +3,12 @@
 
 using namespace std;
 
-ColorExtractor::ColorExtractor(int cm){
+ColorExtractor::ColorExtractor(){
 	this->bg = Mat::zeros(Size(100, 100), CV_16UC1);
-	this->full = false;
+	this->full = false;	//bg is full after n_max fields have max_counter value
 	this->max_value = Point(-1, -1);
+	this->n_max = 4;	//how many point in bg should we fill to max
 	this->max_counter = 1000;
-	this->color_margin = cm;
 }
 
 Point ColorExtractor::BGR_to_bg(Vec3b BGR){
@@ -23,6 +23,7 @@ Point ColorExtractor::BGR_to_bg(Vec3b BGR){
 	return p;
 }
 
+//obsolete
 Point ColorExtractor::get_max_square(){
 	//find area in bg with hightes values
 	//square size: (color_margin + 1 + color_margin)^2
@@ -42,11 +43,44 @@ Point ColorExtractor::get_max_square(){
 	return point_max;
 }
 
+void ColorExtractor::set_max_value(){
+	//similar to get_max_square
+	int r = 1;
+	Point point_max(-1, -1);
+	int area_max = 0;
+	for(int i=r; i<bg.rows-r; i++){
+		for(int j=r; j<bg.cols-r; j++){
+			Mat square = bg(Range(i-r, i+r), Range(j-r, j+r));
+			Scalar sc = sum(square);
+			int s = sc[0];
+			if(s > area_max){
+				area_max = s;
+				point_max = Point(j, i);
+			}
+		}
+	}
+	this->max_value = point_max;
+}
+
+void ColorExtractor::check_fullness(){
+	int c = 0;
+	for(int i=0; i<bg.rows; i++){
+		for(int j=0; j<bg.cols; j++){
+			if(bg.at<int>(Point(j, i)) == max_counter){
+				c += 1;
+			}
+		}
+	}
+	if(c == n_max){
+		this->full = true;
+	}
+}
+
 Point ColorExtractor::update_bg(Mat &src){
 	//keep updating color space until there's one full column (most prominent color)
 	//return position of the full column when full
 	if(full){
-		return max_value;
+		return this->max_value;
 	}
 	for(int i=0; i<src.rows; i++){
 		for(int j=0; j<src.cols; j++){
@@ -61,12 +95,13 @@ Point ColorExtractor::update_bg(Mat &src){
 			int counter = bg.at<int>(p);
 			if(counter < max_counter){
 				counter += 1;
+				bg.at<int>(p) = counter;
 			}else{
-				full = true;
+				this->check_fullness();
+				this->set_max_value();
 				//max_value = get_max_square();
-				max_value = p;
+				this->max_value = p;
 			}
-			bg.at<int>(p) = counter;
 		}
 	}
 	return Point(-1, -1);

@@ -102,7 +102,7 @@ int main(int argc, char** argv){
 	VideoWriter output_cap;
 	CascadeClassifier detector;
 	vector<Rect> found_faces;
-	ColorExtractor cex(in_param.color_margin);
+	ColorExtractor cex;
 	Point skin_point(-1, -1);
 	Rect face_rect(-1, -1, 0, 0); //x, y, width, height
 	HandTracker lh_tr("left");
@@ -145,7 +145,7 @@ int main(int argc, char** argv){
 
 	//init window
 	namedWindow("binary_image", WINDOW_NORMAL);
-	namedWindow("cap", WINDOW_NORMAL);
+	//namedWindow("cap", WINDOW_NORMAL);
 	cout << "Press 'q' to quit, 'p' to capture frame." << endl;
 
 	//wait 5 seconds
@@ -236,8 +236,7 @@ int main(int argc, char** argv){
 		gest.take_action();	//simulate pressing keys
 
 		//show detections
-		imshow("cap", frame);		
-        //imshow("foreground", foreground);
+		//imshow("cap", frame);		
         gest.draw_grid(skin_binary3, face_rect);
 		imshow("binary_image", skin_binary3);
 		cex.display_bg();
