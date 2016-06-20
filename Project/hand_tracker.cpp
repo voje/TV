@@ -27,10 +27,18 @@ void HandTracker::find_hand(Mat &frame, Rect &face_rect){
 	if(face_rect.tl().x == -1){
 		face_mid_x = floor(frame.cols/2);
 	}else{
+		//extend face rectangle a bit, so we don't search for hands where the face is
+		int ext = floor( (face_rect.br().x - face_rect.tl().x)/2 );
 		if(this->is_left()){
-			face_mid_x = face_rect.tl().x;
+			face_mid_x = face_rect.tl().x - ext;
+			if(face_mid_x < 0){
+				return;
+			}
 		}else{
-			face_mid_x = face_rect.br().x; 
+			face_mid_x = face_rect.br().x + ext; 
+			if(face_mid_x >= frame.cols){
+				return;
+			}
 		}
 	}
 

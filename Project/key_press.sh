@@ -4,7 +4,7 @@
 # xdotool key / keydown / keyup
 # wmctrl -R <window_name>
 
-simulate=false  	#set true if you want the output to go to terminal (testing purposes)
+simulate=true  	#set true if you want the output to go to terminal (testing purposes)
 target_window_name="warcraft"
 
 if $simulate; then
@@ -37,9 +37,9 @@ case "$1" in
 		echo "stop turning right"
 		xdotool keyup d
 		;;
-	"JUMP")
-		echo "jump"
-		xdotool key Space 
+	"HEAL")
+		echo "heal"
+		xdotool key 4
 		;;
 	"TAB")
 		echo "tab"

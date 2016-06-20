@@ -4,6 +4,7 @@
 #include <opencv2/opencv.hpp>
 
 enum fields{TL, ML, BL, TR, MR, BR};	//top left, ...
+enum gestures{DEFAULT, LOOT, TAB, SHOOT, SHIELD, HEAL};
 
 class GestureTracker{
 	bool running;
@@ -20,7 +21,9 @@ class GestureTracker{
 	int delay;
 	bool turning_left;
 	bool turning_right;
-	bool reset;
+	gestures last_gesture;
+	int gesture_counter;
+	int gesture_counter_max;
 
 public:
 	GestureTracker(int, int);	

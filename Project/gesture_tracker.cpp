@@ -32,7 +32,9 @@ GestureTracker::GestureTracker(int delay, int head_dy_min){
 	this->delay = delay;
 	this->turning_left = false;
 	this->turning_right = false;
-	this->reset = true;	//if reset is true, we are listening for a new action
+	this->last_gesture = DEFAULT;
+	this->gesture_counter = 0; //count to 0 for a pose to emit action
+	this->gesture_counter_max = 5;
 }
 
 void GestureTracker::update(Rect face_rect, Point l_hand, Point r_hand, Mat &frame){
@@ -128,9 +130,6 @@ void GestureTracker::take_action(){
 	if(l_hand == -1 || r_hand == -1){
 		return;
 	}	
-	if(l_hand == TL && r_hand == TR){
-		return;
-	}
 
 	//handle run toggle
 	if(run_toggle){
@@ -165,27 +164,62 @@ void GestureTracker::take_action(){
 		return;
 	}
 	if(l_hand == BL && r_hand == BR){
-		this->reset = true;
+		last_gesture = DEFAULT;
 	}
-	else if(l_hand == TL && r_hand == TR && reset){
-		reset = false;
-		system("bash ../key_press.sh JUMP");
+	else if(l_hand == TL && r_hand == TR){
+		if(last_gesture == HEAL){
+			gesture_counter += 1;
+		}else{
+			gesture_counter = 0;
+		}
+		if(gesture_counter == gesture_counter_max){
+			system("bash ../key_press.sh HEAL");
+		}
+		last_gesture = HEAL;
 	}
-	else if(l_hand == ML && r_hand == MR && reset){
-		reset = false;
-		system("bash ../key_press.sh TAB");
+	else if(l_hand == ML && r_hand == MR){
+		if(last_gesture == TAB){
+			gesture_counter += 1;
+		}else{
+			gesture_counter = 0;
+		}
+		if(gesture_counter == gesture_counter_max){
+			system("bash ../key_press.sh TAB");
+		}
+		last_gesture = TAB;
 	}
-	else if(l_hand == ML && r_hand == BR && reset){
-		reset = false;
-		system("bash ../key_press.sh SHOOT");
+	else if(l_hand == ML && r_hand == BR){
+		if(last_gesture == SHOOT){
+			gesture_counter += 1;
+		}else{
+			gesture_counter = 0;
+		}
+		if(gesture_counter == gesture_counter_max){
+			system("bash ../key_press.sh SHOOT");
+		}
+		last_gesture = SHOOT;
 	}
-	else if(l_hand == BL && r_hand == MR && reset){
-		reset = false;
-		system("bash ../key_press.sh SHIELD");
+	else if(l_hand == BL && r_hand == MR){
+		if(last_gesture == SHIELD){
+			gesture_counter += 1;
+		}else{
+			gesture_counter = 0;
+		}
+		if(gesture_counter == gesture_counter_max){
+			system("bash ../key_press.sh SHIELD");
+		}
+		last_gesture = SHIELD;
 	}
-	else if(l_hand == ML && r_hand == BR && reset){
-		reset = false;
-		system("bash ../key_press.sh LOOT");
+	else if(l_hand == ML && r_hand == TR){
+		if(last_gesture == LOOT){
+			gesture_counter += 1;
+		}else{
+			gesture_counter = 0;
+		}
+		if(gesture_counter == gesture_counter_max){
+			system("bash ../key_press.sh LOOT");
+		}
+		last_gesture = LOOT;
 	}
 }//take action
 
