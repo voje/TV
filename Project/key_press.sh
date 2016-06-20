@@ -4,7 +4,7 @@
 # xdotool key / keydown / keyup
 # wmctrl -R <window_name>
 
-simulate=true  	#set true if you want the output to go to terminal (testing purposes)
+simulate=false  	#set true if you want the output to go to terminal (testing purposes)
 target_window_name="warcraft"
 
 if $simulate; then
@@ -53,9 +53,12 @@ case "$1" in
 		echo "shield"
 		xdotool key c
 		;;
-	"HEAL")
-		echo "heal"
-		xdotool key 4
+	"LOOT")
+		echo "loot"
+		xdotool keydown Shift
+		xdotool click 3
+		sleep 0.5s
+		xdotool keyup Shift 
 		;;
 	*)
 		echo "error: Undefined command."

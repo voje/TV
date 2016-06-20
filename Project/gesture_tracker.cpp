@@ -183,6 +183,10 @@ void GestureTracker::take_action(){
 		reset = false;
 		system("bash ../key_press.sh SHIELD");
 	}
+	else if(l_hand == ML && r_hand == BR && reset){
+		reset = false;
+		system("bash ../key_press.sh LOOT");
+	}
 }//take action
 
 //visualization
