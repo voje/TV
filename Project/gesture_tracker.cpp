@@ -32,6 +32,7 @@ GestureTracker::GestureTracker(int delay, int head_dy_min){
 	this->delay = delay;
 	this->turning_left = false;
 	this->turning_right = false;
+	this->reset = true;	//if reset is true, we are listening for a new action
 }
 
 void GestureTracker::update(Rect face_rect, Point l_hand, Point r_hand, Mat &frame){
@@ -145,26 +146,43 @@ void GestureTracker::take_action(){
 	if(l_hand == TL && r_hand == BR && !turning_left && !turning_right){
 		turning_left = true;
 		system("bash ../key_press.sh TURN_LEFT_ON");
-	}else if(l_hand != TL && turning_left){
+	}
+	else if(l_hand != TL && turning_left){
 		turning_left = false;
 		system("bash ../key_press.sh TURN_LEFT_OFF");
 	}
 	if(l_hand == BL && r_hand == TR && !turning_left && !turning_right){
 		turning_right = true;
 		system("bash ../key_press.sh TURN_RIGHT_ON");
-	}else if(r_hand != TR && turning_right){
+	}
+	else if(r_hand != TR && turning_right){
 		turning_right = false;
 		system("bash ../key_press.sh TURN_RIGHT_OFF");
 	}
 
-	//other actions
+	//other actions, available while standing still
 	if(running){
 		return;
 	}
-	if(l_hand == TL && r_hand == TR){
-
-	}	
-
+	if(l_hand == BL && r_hand == BR){
+		this->reset = true;
+	}
+	else if(l_hand == TL && r_hand == TR && reset){
+		reset = false;
+		system("bash ../key_press.sh JUMP");
+	}
+	else if(l_hand == ML && r_hand == MR && reset){
+		reset = false;
+		system("bash ../key_press.sh TAB");
+	}
+	else if(l_hand == ML && r_hand == BR && reset){
+		reset = false;
+		system("bash ../key_press.sh SHOOT");
+	}
+	else if(l_hand == BL && r_hand == MR && reset){
+		reset = false;
+		system("bash ../key_press.sh SHIELD");
+	}
 }//take action
 
 //visualization

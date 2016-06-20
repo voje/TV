@@ -49,7 +49,7 @@ void HandTracker::find_hand(Mat &frame, Rect &face_rect){
 
 	if(this->is_left()){
 		for(int j=r; j<submat.cols-r; j++){
-			for(int i=r; i<submat.rows-r; i++){
+			for(int i=submat.rows-r; i>=r; i--){
 				Scalar ssuma = sum(submat(Range(i-r, i+r), Range(j-r, j+r)));
 				double suma = ssuma[0]*(submat.cols - j);
 				if(suma > area){
@@ -60,7 +60,7 @@ void HandTracker::find_hand(Mat &frame, Rect &face_rect){
 		}
 	}else{
 		for(int j=submat.cols-r; j>=r; j--){
-			for(int i=r; i<submat.rows-r; i++){
+			for(int i=submat.rows-r; i>=r; i--){
 				Scalar ssuma = sum(submat(Range(i-r, i+r), Range(j-r, j+r)));
 				double suma = ssuma[0]*j;
 				if(suma > area){

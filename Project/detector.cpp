@@ -30,7 +30,6 @@ struct input_param{
 	string input_file;	//if it's 0, we're reading from webcam
 	string output_file;	//if it's 0, we're not writing
 	string cascade_file;	//for face detection
-	int window_margin;	//outdated - used to create outer window (narrow the search)
 	int morph_size;		//morphological object size
 	int color_margin;	//how far around skin point do we search in bg space
 	int window_size_cols;	//resize frame after captzre (speed up the process)
@@ -62,7 +61,6 @@ void read_input_param(){
 	ifs >> skip >> value; in_param.input_file = value;
 	ifs >> skip >> value; in_param.output_file = value;
 	ifs >> skip >> value; in_param.cascade_file = value;
-	ifs >> skip >> value; in_param.window_margin = atoi(value.c_str());
 	ifs >> skip >> value; in_param.morph_size = atoi(value.c_str());
 	ifs >> skip >> value; in_param.color_margin = atoi(value.c_str());
 	ifs >> skip >> value; in_param.window_size_cols = atoi(value.c_str());
@@ -153,7 +151,7 @@ int main(int argc, char** argv){
 	//wait 5 seconds
 	cout << "Position yourself." << endl;
 	usleep(5000000);
-	cout << "Starting capture.";
+	cout << "Starting capture." << endl;
 
 	for(;;){
 		cap >> frame;
@@ -180,11 +178,6 @@ int main(int argc, char** argv){
 		//perform rotation if necessary
 		flip(frame, frame, 0); //1 flips around x axis
 
-		//if enabled, start extracting foreground after the color is extracted from face
-		if(in_param.extract_foreground && cex.is_full()){
-			extract_foreground(frame, frame, pMOG2);
-		}
-
 		//initiate binary matrix with zeros
 		skin_binary = Mat::zeros(frame.size(), CV_8U);
 
@@ -201,8 +194,19 @@ int main(int argc, char** argv){
 				int xresizer = floor((br.x-tl.x)/5);
 				Mat small_face_region = frame(Range(tl.y+yresizer, br.y-yresizer), Range(tl.x+xresizer, br.x-xresizer));		
 				//imshow("small_face_region", small_face_region);
-				skin_point = cex.update_bg(small_face_region);
+				if(skin_point.x == -1){
+					Point new_skin_point = cex.update_bg(small_face_region);
+					if(cex.is_full()){
+						skin_point = new_skin_point;
+						cout << "Skin color extracted." << endl;
+					}
+				}
 			}
+		}
+
+		//if enabled, start extracting foreground after the color is extracted from face
+		if(in_param.extract_foreground && cex.is_full()){
+			extract_foreground(frame, frame, pMOG2);
 		}
 
 		//detect skin

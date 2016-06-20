@@ -4,7 +4,7 @@
 using namespace std;
 
 ColorExtractor::ColorExtractor(int cm){
-	this->bg = Mat::zeros(Size(100, 100), CV_16UC1);	// CV_U8 -> unsigned char	
+	this->bg = Mat::zeros(Size(100, 100), CV_16UC1);
 	this->full = false;
 	this->max_value = Point(-1, -1);
 	this->max_counter = 1000;
@@ -48,7 +48,6 @@ Point ColorExtractor::update_bg(Mat &src){
 	if(full){
 		return max_value;
 	}
-	cout << "extracting color" << endl;
 	for(int i=0; i<src.rows; i++){
 		for(int j=0; j<src.cols; j++){
 			Vec3b BGR = src.at<Vec3b>(Point(j, i));

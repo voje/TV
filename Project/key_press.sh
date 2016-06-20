@@ -4,7 +4,7 @@
 # xdotool key / keydown / keyup
 # wmctrl -R <window_name>
 
-simulate=true
+simulate=true  	#set true if you want the output to go to terminal (testing purposes)
 target_window_name="warcraft"
 
 if $simulate; then
@@ -36,6 +36,26 @@ case "$1" in
 	"TURN_RIGHT_OFF")
 		echo "stop turning right"
 		xdotool keyup d
+		;;
+	"JUMP")
+		echo "jump"
+		xdotool key Space 
+		;;
+	"TAB")
+		echo "tab"
+		xdotool key Tab
+		;;
+	"SHOOT")
+		echo "shoot"
+		xdotool key 1
+		;;
+	"SHIELD")
+		echo "shield"
+		xdotool key c
+		;;
+	"HEAL")
+		echo "heal"
+		xdotool key 4
 		;;
 	*)
 		echo "error: Undefined command."

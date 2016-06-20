@@ -20,6 +20,7 @@ class GestureTracker{
 	int delay;
 	bool turning_left;
 	bool turning_right;
+	bool reset;
 
 public:
 	GestureTracker(int, int);	
