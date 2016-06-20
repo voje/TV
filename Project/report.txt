@@ -15,7 +15,8 @@ New plan:
 	- extract foreground (done) (2h)
 	- detect hands using skin color
 	Problem with a t-shirt: the whole forearm is detected. I will take head and detect palm as the furthest point from head.
-        Created a HandTracker class that finds hand based on a binary image, left and right from head. (done) 6h
-	- object MovementTracker tracks changes in face y position and hands x and y position (5 dimensions). Face x is omitted to speed up the recognition of gestures. (todo)
-
+        Created a HandTracker class that finds hand based on a binary image, left and right from head. (done) (6h)
+    - gesture detection. frame is divided into 6 fields, 3 for left arm, 3 for right, relative to head position.
+      Gestures are recognized with a delay of n frames. (6h)
+    - finished developing, needs some more testing, optimization and cleaning up the code.
 

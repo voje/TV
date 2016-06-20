@@ -16,14 +16,14 @@ using namespace std;
 using namespace cv;
 
 //parameters for detectMultiscale
-struct my_param{
+struct detectMultiscale_param{
 	bool detect_face;
 	double scaleFactor;
 	int minNeigh; //3 in documentation
 	int flags;	//should be 0
 	Size minSize;
 	Size maxSize;
-} param;
+} dm_param;
 
 struct input_param{
 	int key_wait;		//framerate if reading from 0; set it to 30
@@ -37,38 +37,38 @@ struct input_param{
 	int gest_delay;
 	int head_dy_min;
 	int extract_foreground;
-} static inp;
+} static in_param;
 
 void detect_skin(Mat &frame, Point &skin_point, Mat &bin, ColorExtractor cex){
 	for(int i=0; i<bin.rows; i++){
 		for(int j=0; j<bin.cols; j++){
 			Vec3b BGR = frame.at<Vec3b>(Point(j, i));
 			Point p = cex.BGR_to_bg(BGR);
-			if(	p.x <= skin_point.x + inp.color_margin && 
-				p.x >= skin_point.x - inp.color_margin &&
-				p.y <= skin_point.y + inp.color_margin &&
-				p.y >= skin_point.y - inp.color_margin	){
+			if(	p.x <= skin_point.x + in_param.color_margin && 
+				p.x >= skin_point.x - in_param.color_margin &&
+				p.y <= skin_point.y + in_param.color_margin &&
+				p.y >= skin_point.y - in_param.color_margin	){
 				bin.at<unsigned char>(Point(j, i)) = 255;
 			}
 		}
 	}
 }
 
-void read_parameters(input_param &p){
+void read_input_param(){
 	ifstream ifs;	
 	ifs.open("../detector.conf");
 	string skip, value;
-	ifs >> skip >> value; p.key_wait = atoi(value.c_str());
-	ifs >> skip >> value; p.input_file = value;
-	ifs >> skip >> value; p.output_file = value;
-	ifs >> skip >> value; p.cascade_file = value;
-	ifs >> skip >> value; p.window_margin = atoi(value.c_str());
-	ifs >> skip >> value; p.morph_size = atoi(value.c_str());
-	ifs >> skip >> value; p.color_margin = atoi(value.c_str());
-	ifs >> skip >> value; p.window_size_cols = atoi(value.c_str());
-	ifs >> skip >> value; p.gest_delay = atoi(value.c_str());
-	ifs >> skip >> value; p.head_dy_min = atoi(value.c_str());
-	ifs >> skip >> value; p.extract_foreground= atoi(value.c_str());
+	ifs >> skip >> value; in_param.key_wait = atoi(value.c_str());
+	ifs >> skip >> value; in_param.input_file = value;
+	ifs >> skip >> value; in_param.output_file = value;
+	ifs >> skip >> value; in_param.cascade_file = value;
+	ifs >> skip >> value; in_param.window_margin = atoi(value.c_str());
+	ifs >> skip >> value; in_param.morph_size = atoi(value.c_str());
+	ifs >> skip >> value; in_param.color_margin = atoi(value.c_str());
+	ifs >> skip >> value; in_param.window_size_cols = atoi(value.c_str());
+	ifs >> skip >> value; in_param.gest_delay = atoi(value.c_str());
+	ifs >> skip >> value; in_param.head_dy_min = atoi(value.c_str());
+	ifs >> skip >> value; in_param.extract_foreground= atoi(value.c_str());
 }
 
 void extract_foreground(Mat original, Mat &foreground, Ptr<BackgroundSubtractor> bs){
@@ -84,36 +84,36 @@ void extract_foreground(Mat original, Mat &foreground, Ptr<BackgroundSubtractor>
 }
 
 int main(int argc, char** argv){
-	//read parameters
-	read_parameters(inp);
+	//read input parameters
+	read_input_param();
 
-	//Set some parameters.
-	param.detect_face = true;
-	param.scaleFactor = 1.1;
-	param.minNeigh = 3;
-	param.flags = 0;
-	param.minSize = Size(20, 20);	//if you resize window, you need to reset these
-	param.maxSize = Size(100, 100);
+	//Set facedetector parameters.
+	dm_param.detect_face = true;
+	dm_param.scaleFactor = 1.1;
+	dm_param.minNeigh = 3;
+	dm_param.flags = 0;
+	dm_param.minSize = Size(10, 10);	//if you resize window, you need to reset these
+	dm_param.maxSize = Size(80, 80);
 
 	Mat frame, g_frame, skin_binary;
 	Mat mask_MOG2, foreground;
-	Mat morph_element = getStructuringElement( MORPH_ELLIPSE, Size(inp.morph_size, inp.morph_size), Point(floor(inp.morph_size/2)+1, floor(inp.morph_size/2)+1) );
+	Mat morph_element = getStructuringElement( MORPH_ELLIPSE, Size(in_param.morph_size, in_param.morph_size), Point(floor(in_param.morph_size/2)+1, floor(in_param.morph_size/2)+1) );
 
 	//declarations
 	VideoCapture cap;
 	VideoWriter output_cap;
 	CascadeClassifier detector;
 	vector<Rect> found_faces;
-	ColorExtractor cex(inp.color_margin);
+	ColorExtractor cex(in_param.color_margin);
 	Point skin_point(-1, -1);
 	Rect face_rect(-1, -1, 0, 0); //x, y, width, height
 	HandTracker lh_tr("left");
 	HandTracker rh_tr("right");
-	GestureTracker gest(inp.gest_delay, inp.head_dy_min);
+	GestureTracker gest(in_param.gest_delay, in_param.head_dy_min);
 
 	//get input video
-	if(inp.input_file != "0"){
-		cap.open(inp.input_file);
+	if(in_param.input_file != "0"){
+		cap.open(in_param.input_file);
 	}else{
 		cap.open(0);
 		if(!cap.isOpened()){
@@ -123,10 +123,10 @@ int main(int argc, char** argv){
 	}
 
 	//optional write to file
-	if(inp.output_file != "0"){
+	if(in_param.output_file != "0"){
 		int frame_width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
 	   	int frame_height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
-		output_cap.open(inp.output_file, CV_FOURCC('M','J','P','G'), inp.key_wait, Size(frame_width, frame_height), true);
+		output_cap.open(in_param.output_file, CV_FOURCC('M','J','P','G'), in_param.key_wait, Size(frame_width, frame_height), true);
 
 		if(!output_cap.isOpened()){
 	        std::cout << "!!! Output video could not be opened" << std::endl;
@@ -135,7 +135,7 @@ int main(int argc, char** argv){
 	}
 
 	//load cascade
-	bool loaded = detector.load(inp.cascade_file);
+	bool loaded = detector.load(in_param.cascade_file);
 	if(!loaded){
 		cout << "Cascade not loaded." << endl;
 		return 1;
@@ -148,10 +148,10 @@ int main(int argc, char** argv){
 	//init window
 	namedWindow("binary_image", WINDOW_NORMAL);
 	namedWindow("cap", WINDOW_NORMAL);
-	cout << "Press 'q' to quit." << endl;
+	cout << "Press 'q' to quit, 'p' to capture frame." << endl;
 
 	//wait 5 seconds
-	cout << "Set focus on desired window and position yourself." << endl;
+	cout << "Position yourself." << endl;
 	usleep(5000000);
 	cout << "Starting capture.";
 
@@ -163,35 +163,35 @@ int main(int argc, char** argv){
 		}
 
 		//write
-		if(inp.output_file != "0"){
+		if(in_param.output_file != "0"){
 			output_cap.write(frame);	
 		}
 
-		//resize by half
+		//resize window (faster processing)
 		double frame_scale;
-		if(frame.cols <= inp.window_size_cols){
+		if(frame.cols <= in_param.window_size_cols){
 			frame_scale = 1;
 		}else{
-			frame_scale = ((double)inp.window_size_cols)/((double)frame.cols);
+			frame_scale = ((double)in_param.window_size_cols)/((double)frame.cols);
 		}
 		Size win_size((int)(frame.cols*frame_scale), (int)(frame.rows*frame_scale));
 		resize(frame, frame, win_size);
 
-		//preform necessary rotations
+		//perform rotation if necessary
 		flip(frame, frame, 0); //1 flips around x axis
 
 		//if enabled, start extracting foreground after the color is extracted from face
-		if(inp.extract_foreground && cex.is_full()){
+		if(in_param.extract_foreground && cex.is_full()){
 			extract_foreground(frame, frame, pMOG2);
 		}
 
-		//prepare additional matrices
+		//initiate binary matrix with zeros
 		skin_binary = Mat::zeros(frame.size(), CV_8U);
 
 		//face
 		cvtColor(frame, g_frame, CV_BGR2GRAY);
-		if(param.detect_face){
-			detector.detectMultiScale(g_frame, found_faces, param.scaleFactor, param.minNeigh, param.flags, param.minSize, param.maxSize);
+		if(dm_param.detect_face){
+			detector.detectMultiScale(g_frame, found_faces, dm_param.scaleFactor, dm_param.minNeigh, dm_param.flags, dm_param.minSize, dm_param.maxSize);
 			//display 1 found face
 			if(found_faces.size() > 0){
 				face_rect = found_faces[0];
@@ -231,13 +231,14 @@ int main(int argc, char** argv){
 		gest.update(face_rect, lh_tr.get_point(), rh_tr.get_point(), frame);
 		gest.take_action();	//simulate pressing keys
 
+		//show detections
 		imshow("cap", frame);		
         //imshow("foreground", foreground);
         gest.draw_grid(skin_binary3, face_rect);
 		imshow("binary_image", skin_binary3);
 		cex.display_bg();
 		
-		char c = waitKey(inp.key_wait);
+		char c = waitKey(in_param.key_wait);
 		if(c == 'q'){
 			break;
 		}

@@ -3,6 +3,8 @@
 
 #include <opencv2/opencv.hpp>
 
+enum fields{TL, ML, BL, TR, MR, BR};	//top left, ...
+
 class GestureTracker{
 	bool running;
 	bool run_toggle;
@@ -18,6 +20,7 @@ class GestureTracker{
 	int delay;
 	bool turning_left;
 	bool turning_right;
+
 public:
 	GestureTracker(int, int);	
 	void update(cv::Rect, cv::Point, cv::Point, cv::Mat&);

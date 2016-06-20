@@ -17,8 +17,6 @@ Height of area [2 5]: rest of frame.
 
 */
 
-enum fields{TL, ML, BL, TR, MR, BR};	//top left, ...
-
 GestureTracker::GestureTracker(int delay, int head_dy_min){
 	this->running = false;
 	this->run_toggle = false;	//send run action only when toggled
@@ -124,6 +122,8 @@ void GestureTracker::update(Rect face_rect, Point l_hand, Point r_hand, Mat &fra
 
 void GestureTracker::take_action(){
 	//uses key_press.sh to take an action
+
+	//in case hands haven't been detected
 	if(l_hand == -1 || r_hand == -1){
 		return;
 	}	
@@ -140,6 +140,8 @@ void GestureTracker::take_action(){
 		}
 		run_toggle = false;
 	}
+
+	//turning left and right
 	if(l_hand == TL && r_hand == BR && !turning_left && !turning_right){
 		turning_left = true;
 		system("bash ../key_press.sh TURN_LEFT_ON");
@@ -154,8 +156,18 @@ void GestureTracker::take_action(){
 		turning_right = false;
 		system("bash ../key_press.sh TURN_RIGHT_OFF");
 	}
-}
 
+	//other actions
+	if(running){
+		return;
+	}
+	if(l_hand == TL && r_hand == TR){
+
+	}	
+
+}//take action
+
+//visualization
 void GestureTracker::draw_grid(Mat &frame, Rect face_rect){
 	//void line(Mat& img, Point pt1, Point pt2, const Scalar& color, int thickness=1, int lineType=8, int shift=0)
 	int mid_height = floor(0.3*frame.rows);
