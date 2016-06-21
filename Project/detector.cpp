@@ -90,8 +90,8 @@ int main(int argc, char** argv){
 	dm_param.scaleFactor = 1.1;
 	dm_param.minNeigh = 3;
 	dm_param.flags = 0;
-	dm_param.minSize = Size(10, 10);	//if you resize window, you need to reset these
-	dm_param.maxSize = Size(80, 80);
+	dm_param.minSize = Size(1, 1);	//if you resize window, you need to reset these
+	dm_param.maxSize = Size(60, 60);
 
 	Mat frame, g_frame, skin_binary;
 	Mat mask_MOG2, foreground;
@@ -144,8 +144,8 @@ int main(int argc, char** argv){
 	pMOG2 = createBackgroundSubtractorMOG2();
 
 	//init window
+	namedWindow("cap", WINDOW_NORMAL);
 	namedWindow("binary_image", WINDOW_NORMAL);
-	//namedWindow("cap", WINDOW_NORMAL);
 	cout << "Press 'q' to quit, 'p' to capture frame." << endl;
 
 	//wait 5 seconds
@@ -205,6 +205,8 @@ int main(int argc, char** argv){
 		}
 
 		//if enabled, start extracting foreground after the color is extracted from face
+		//display original image before extracting foreground
+		imshow("cap", frame);		
 		if(in_param.extract_foreground && cex.is_full()){
 			extract_foreground(frame, frame, pMOG2);
 		}
@@ -236,7 +238,6 @@ int main(int argc, char** argv){
 		gest.take_action();	//simulate pressing keys
 
 		//show detections
-		//imshow("cap", frame);		
         gest.draw_grid(skin_binary3, face_rect);
 		imshow("binary_image", skin_binary3);
 		cex.display_bg();

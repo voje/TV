@@ -4,7 +4,7 @@
 # xdotool key / keydown / keyup
 # wmctrl -R <window_name>
 
-simulate=true  	#set true if you want the output to go to terminal (testing purposes)
+simulate=false  	#set true if you want the output to go to terminal (testing purposes)
 target_window_name="warcraft"
 
 if $simulate; then
