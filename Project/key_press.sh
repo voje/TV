@@ -39,11 +39,11 @@ case "$1" in
 		;;
 	"HEAL")
 		echo "heal"
-		xdotool key 4
+		xdotool key 3
 		;;
 	"TAB")
 		echo "tab"
-		xdotool key Tab
+		xdotool key 4
 		;;
 	"SHOOT")
 		echo "shoot"
@@ -51,7 +51,7 @@ case "$1" in
 		;;
 	"SHIELD")
 		echo "shield"
-		xdotool key c
+		xdotool key 2
 		;;
 	"LOOT")
 		echo "loot"
