@@ -149,7 +149,7 @@ int main(int argc, char** argv){
 	cout << "Press 'q' to quit, 'p' to capture frame." << endl;
 
 	//wait 5 seconds
-	cout << "Position yourself." << endl;
+	cout << "Position yourself (5 sec)." << endl;
 	usleep(5000000);
 	cout << "Starting capture." << endl;
 

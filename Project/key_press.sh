@@ -8,7 +8,8 @@ simulate=false  	#set true if you want the output to go to terminal (testing pur
 target_window_name="warcraft"
 
 if $simulate; then
-	target_window_name="kristjan"	#going for terminal
+	gedit simulation.txt &
+	target_window_name="gedit"	#going for terminal
 fi
 wmctrl -R "$target_window_name"
 

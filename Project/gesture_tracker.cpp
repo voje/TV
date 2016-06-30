@@ -34,7 +34,7 @@ GestureTracker::GestureTracker(int delay, int head_dy_min){
 	this->turning_right = false;
 	this->last_gesture = DEFAULT;
 	this->gesture_counter = 0; //count to 0 for a pose to emit action
-	this->gesture_counter_max = 5;
+	this->gesture_counter_max = this->delay;
 }
 
 void GestureTracker::update(Rect face_rect, Point l_hand, Point r_hand, Mat &frame){
