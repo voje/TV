@@ -1,4 +1,4 @@
-# Install script for directory: /home/kristjan/FRI/TV/Project
+# Install script for directory: /home/kristjan/FRI/TV/Project/src
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -6,11 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/home/kristjan/FRI/TV/Project/color_extractor.h
+/home/kristjan/FRI/TV/Project/src/color_extractor.cpp
+color_extractor.h
+/home/kristjan/FRI/TV/Project/src/color_extractor.h
+iostream
+-
+
+/home/kristjan/FRI/TV/Project/src/color_extractor.h
 opencv2/opencv.hpp
 -
 
-/home/kristjan/FRI/TV/Project/detector.cpp
+/home/kristjan/FRI/TV/Project/src/detector.cpp
 iostream
 -
 fstream
@@ -30,17 +36,25 @@ opencv2/imgproc.hpp
 opencv2/opencv.hpp
 -
 color_extractor.h
-/home/kristjan/FRI/TV/Project/color_extractor.h
+/home/kristjan/FRI/TV/Project/src/color_extractor.h
 hand_tracker.h
-/home/kristjan/FRI/TV/Project/hand_tracker.h
+/home/kristjan/FRI/TV/Project/src/hand_tracker.h
 gesture_tracker.h
-/home/kristjan/FRI/TV/Project/gesture_tracker.h
+/home/kristjan/FRI/TV/Project/src/gesture_tracker.h
 
-/home/kristjan/FRI/TV/Project/gesture_tracker.h
+/home/kristjan/FRI/TV/Project/src/gesture_tracker.cpp
+gesture_tracker.h
+/home/kristjan/FRI/TV/Project/src/gesture_tracker.h
+
+/home/kristjan/FRI/TV/Project/src/gesture_tracker.h
 opencv2/opencv.hpp
 -
 
-/home/kristjan/FRI/TV/Project/hand_tracker.h
+/home/kristjan/FRI/TV/Project/src/hand_tracker.cpp
+hand_tracker.h
+/home/kristjan/FRI/TV/Project/src/hand_tracker.h
+
+/home/kristjan/FRI/TV/Project/src/hand_tracker.h
 opencv2/opencv.hpp
 -
 

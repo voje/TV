@@ -191,7 +191,7 @@ OpenCV_LIB_DIR_OPT:PATH=
 rgb_interaction_BINARY_DIR:STATIC=/home/kristjan/FRI/TV/Project/build
 
 //Value Computed by CMake
-rgb_interaction_SOURCE_DIR:STATIC=/home/kristjan/FRI/TV/Project
+rgb_interaction_SOURCE_DIR:STATIC=/home/kristjan/FRI/TV/Project/src
 
 
 ########################
@@ -264,7 +264,7 @@ CMAKE_GENERATOR:INTERNAL=Unix Makefiles
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
 //Start directory with the top level CMakeLists.txt file for this
 // project
-CMAKE_HOME_DIRECTORY:INTERNAL=/home/kristjan/FRI/TV/Project
+CMAKE_HOME_DIRECTORY:INTERNAL=/home/kristjan/FRI/TV/Project/src
 //Install .so files without execute permission.
 CMAKE_INSTALL_SO_NO_EXE:INTERNAL=1
 //ADVANCED property for variable: CMAKE_LINKER

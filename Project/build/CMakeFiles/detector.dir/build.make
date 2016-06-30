@@ -35,7 +35,7 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/kristjan/FRI/TV/Project
+CMAKE_SOURCE_DIR = /home/kristjan/FRI/TV/Project/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/kristjan/FRI/TV/Project/build
@@ -50,18 +50,18 @@ include CMakeFiles/detector.dir/progress.make
 include CMakeFiles/detector.dir/flags.make
 
 CMakeFiles/detector.dir/detector.cpp.o: CMakeFiles/detector.dir/flags.make
-CMakeFiles/detector.dir/detector.cpp.o: ../detector.cpp
+CMakeFiles/detector.dir/detector.cpp.o: /home/kristjan/FRI/TV/Project/src/detector.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/kristjan/FRI/TV/Project/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/detector.dir/detector.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/detector.dir/detector.cpp.o -c /home/kristjan/FRI/TV/Project/detector.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/detector.dir/detector.cpp.o -c /home/kristjan/FRI/TV/Project/src/detector.cpp
 
 CMakeFiles/detector.dir/detector.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/detector.dir/detector.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/kristjan/FRI/TV/Project/detector.cpp > CMakeFiles/detector.dir/detector.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/kristjan/FRI/TV/Project/src/detector.cpp > CMakeFiles/detector.dir/detector.cpp.i
 
 CMakeFiles/detector.dir/detector.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/detector.dir/detector.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/kristjan/FRI/TV/Project/detector.cpp -o CMakeFiles/detector.dir/detector.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/kristjan/FRI/TV/Project/src/detector.cpp -o CMakeFiles/detector.dir/detector.cpp.s
 
 CMakeFiles/detector.dir/detector.cpp.o.requires:
 .PHONY : CMakeFiles/detector.dir/detector.cpp.o.requires
@@ -73,18 +73,18 @@ CMakeFiles/detector.dir/detector.cpp.o.provides: CMakeFiles/detector.dir/detecto
 CMakeFiles/detector.dir/detector.cpp.o.provides.build: CMakeFiles/detector.dir/detector.cpp.o
 
 CMakeFiles/detector.dir/color_extractor.cpp.o: CMakeFiles/detector.dir/flags.make
-CMakeFiles/detector.dir/color_extractor.cpp.o: ../color_extractor.cpp
+CMakeFiles/detector.dir/color_extractor.cpp.o: /home/kristjan/FRI/TV/Project/src/color_extractor.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/kristjan/FRI/TV/Project/build/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/detector.dir/color_extractor.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/detector.dir/color_extractor.cpp.o -c /home/kristjan/FRI/TV/Project/color_extractor.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/detector.dir/color_extractor.cpp.o -c /home/kristjan/FRI/TV/Project/src/color_extractor.cpp
 
 CMakeFiles/detector.dir/color_extractor.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/detector.dir/color_extractor.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/kristjan/FRI/TV/Project/color_extractor.cpp > CMakeFiles/detector.dir/color_extractor.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/kristjan/FRI/TV/Project/src/color_extractor.cpp > CMakeFiles/detector.dir/color_extractor.cpp.i
 
 CMakeFiles/detector.dir/color_extractor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/detector.dir/color_extractor.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/kristjan/FRI/TV/Project/color_extractor.cpp -o CMakeFiles/detector.dir/color_extractor.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/kristjan/FRI/TV/Project/src/color_extractor.cpp -o CMakeFiles/detector.dir/color_extractor.cpp.s
 
 CMakeFiles/detector.dir/color_extractor.cpp.o.requires:
 .PHONY : CMakeFiles/detector.dir/color_extractor.cpp.o.requires
@@ -96,18 +96,18 @@ CMakeFiles/detector.dir/color_extractor.cpp.o.provides: CMakeFiles/detector.dir/
 CMakeFiles/detector.dir/color_extractor.cpp.o.provides.build: CMakeFiles/detector.dir/color_extractor.cpp.o
 
 CMakeFiles/detector.dir/hand_tracker.cpp.o: CMakeFiles/detector.dir/flags.make
-CMakeFiles/detector.dir/hand_tracker.cpp.o: ../hand_tracker.cpp
+CMakeFiles/detector.dir/hand_tracker.cpp.o: /home/kristjan/FRI/TV/Project/src/hand_tracker.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/kristjan/FRI/TV/Project/build/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/detector.dir/hand_tracker.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/detector.dir/hand_tracker.cpp.o -c /home/kristjan/FRI/TV/Project/hand_tracker.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/detector.dir/hand_tracker.cpp.o -c /home/kristjan/FRI/TV/Project/src/hand_tracker.cpp
 
 CMakeFiles/detector.dir/hand_tracker.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/detector.dir/hand_tracker.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/kristjan/FRI/TV/Project/hand_tracker.cpp > CMakeFiles/detector.dir/hand_tracker.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/kristjan/FRI/TV/Project/src/hand_tracker.cpp > CMakeFiles/detector.dir/hand_tracker.cpp.i
 
 CMakeFiles/detector.dir/hand_tracker.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/detector.dir/hand_tracker.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/kristjan/FRI/TV/Project/hand_tracker.cpp -o CMakeFiles/detector.dir/hand_tracker.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/kristjan/FRI/TV/Project/src/hand_tracker.cpp -o CMakeFiles/detector.dir/hand_tracker.cpp.s
 
 CMakeFiles/detector.dir/hand_tracker.cpp.o.requires:
 .PHONY : CMakeFiles/detector.dir/hand_tracker.cpp.o.requires
@@ -119,18 +119,18 @@ CMakeFiles/detector.dir/hand_tracker.cpp.o.provides: CMakeFiles/detector.dir/han
 CMakeFiles/detector.dir/hand_tracker.cpp.o.provides.build: CMakeFiles/detector.dir/hand_tracker.cpp.o
 
 CMakeFiles/detector.dir/gesture_tracker.cpp.o: CMakeFiles/detector.dir/flags.make
-CMakeFiles/detector.dir/gesture_tracker.cpp.o: ../gesture_tracker.cpp
+CMakeFiles/detector.dir/gesture_tracker.cpp.o: /home/kristjan/FRI/TV/Project/src/gesture_tracker.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/kristjan/FRI/TV/Project/build/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/detector.dir/gesture_tracker.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/detector.dir/gesture_tracker.cpp.o -c /home/kristjan/FRI/TV/Project/gesture_tracker.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/detector.dir/gesture_tracker.cpp.o -c /home/kristjan/FRI/TV/Project/src/gesture_tracker.cpp
 
 CMakeFiles/detector.dir/gesture_tracker.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/detector.dir/gesture_tracker.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/kristjan/FRI/TV/Project/gesture_tracker.cpp > CMakeFiles/detector.dir/gesture_tracker.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/kristjan/FRI/TV/Project/src/gesture_tracker.cpp > CMakeFiles/detector.dir/gesture_tracker.cpp.i
 
 CMakeFiles/detector.dir/gesture_tracker.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/detector.dir/gesture_tracker.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/kristjan/FRI/TV/Project/gesture_tracker.cpp -o CMakeFiles/detector.dir/gesture_tracker.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/kristjan/FRI/TV/Project/src/gesture_tracker.cpp -o CMakeFiles/detector.dir/gesture_tracker.cpp.s
 
 CMakeFiles/detector.dir/gesture_tracker.cpp.o.requires:
 .PHONY : CMakeFiles/detector.dir/gesture_tracker.cpp.o.requires
@@ -180,6 +180,7 @@ detector: /usr/local/lib/libopencv_ccalib.so.3.1.0
 detector: /usr/local/lib/libopencv_bioinspired.so.3.1.0
 detector: /usr/local/lib/libopencv_bgsegm.so.3.1.0
 detector: /usr/local/lib/libopencv_aruco.so.3.1.0
+detector: /usr/local/lib/libopencv_viz.so.3.1.0
 detector: /usr/local/lib/libopencv_videostab.so.3.1.0
 detector: /usr/local/lib/libopencv_videoio.so.3.1.0
 detector: /usr/local/lib/libopencv_video.so.3.1.0
@@ -231,6 +232,6 @@ CMakeFiles/detector.dir/clean:
 .PHONY : CMakeFiles/detector.dir/clean
 
 CMakeFiles/detector.dir/depend:
-	cd /home/kristjan/FRI/TV/Project/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kristjan/FRI/TV/Project /home/kristjan/FRI/TV/Project /home/kristjan/FRI/TV/Project/build /home/kristjan/FRI/TV/Project/build /home/kristjan/FRI/TV/Project/build/CMakeFiles/detector.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/kristjan/FRI/TV/Project/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kristjan/FRI/TV/Project/src /home/kristjan/FRI/TV/Project/src /home/kristjan/FRI/TV/Project/build /home/kristjan/FRI/TV/Project/build /home/kristjan/FRI/TV/Project/build/CMakeFiles/detector.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/detector.dir/depend
 
