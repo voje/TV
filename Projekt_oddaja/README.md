@@ -2,12 +2,13 @@
 
 ## Build
 Go to folder ./Project/build.
-Run command:
+Run commands:
 `$ cmake ../src`
+`$ make`
 
 ## Run program
 After building, run:
-`.detector`
+`$ .detector`
 
 For the program to generate user input, you will need to install packages xdotool and wmctrl.
 `$ sudo apt-get install xdotool wmctrl`
