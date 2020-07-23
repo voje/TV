@@ -1,4 +1,4 @@
-FILE(REMOVE_RECURSE
+file(REMOVE_RECURSE
   "CMakeFiles/detector.dir/detector.cpp.o"
   "CMakeFiles/detector.dir/color_extractor.cpp.o"
   "CMakeFiles/detector.dir/hand_tracker.cpp.o"
@@ -8,6 +8,6 @@ FILE(REMOVE_RECURSE
 )
 
 # Per-language clean rules from dependency scanning.
-FOREACH(lang CXX)
-  INCLUDE(CMakeFiles/detector.dir/cmake_clean_${lang}.cmake OPTIONAL)
-ENDFOREACH(lang)
+foreach(lang CXX)
+  include(CMakeFiles/detector.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()
