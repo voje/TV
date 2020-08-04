@@ -1,6 +1,6 @@
 VERSION=0.0.1
 IMG=voje/budget-kinect:${VERSION}
-CNT=cheap_kinect
+CNT=budget_kinect
 
 build-docker:
 	docker build . -t ${IMG}
