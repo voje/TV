@@ -25,10 +25,18 @@ WORKDIR /root/git/opencv
 RUN git checkout tags/${OPENCV_VERSION} -b v${OPENCV_VERSION}
 
 # Bulid OpenCV. Increase NPROC for a faster build.
-# Go grew a cup of coffee... this will take some time.
+# Go brew a cup of coffee... this will take some time.
 RUN mkdir build && \
     rm -rf ./build/* && \
     cd build && \
     cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/usr/local -DENABLE_PRECOMPILED_HEADERS=OFF .. && \
-    make -j`NPROC` && \
+    make -j"$(($(nproc) / 2))" && \
     make install
+
+# Bulid project
+WORKDIR /project/Project
+RUN rm -rf ./build || true
+RUN mkdir ./build || true
+
+WORKDIR /project/Project/build
+
