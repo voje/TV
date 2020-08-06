@@ -33,10 +33,11 @@ RUN mkdir build && \
     make -j"$(($(nproc) / 2))" && \
     make install
 
-# Bulid project
-WORKDIR /project/Project
-RUN rm -rf ./build || true
-RUN mkdir ./build || true
+# Install some utils
+RUN apt-get install -y \
+    x11-apps \
+    libcanberra-gtk-module \
+    libcanberra-gtk3-module    
 
 WORKDIR /project/Project/build
 

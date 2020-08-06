@@ -23,5 +23,5 @@ input_file 0
 
 Using a file (debugging):
 ```
-input_file 
+input_file	../sample_videos/face_and_hands1.mp4
 ```

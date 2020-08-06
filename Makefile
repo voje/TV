@@ -7,4 +7,9 @@ build-docker:
 
 run-docker: build-docker
 	-docker rm -f ${CNT}
-	docker run -it -v $(PWD):/project --name ${CNT} ${IMG} /bin/bash
+	docker run -it \
+		-v $(PWD):/project \
+		--name ${CNT} \
+		-e DISPLAY=${DISPLAY} \
+		-v /tmp/.X11-unix:/tmp/.X11-unix \
+		${IMG} /bin/bash
