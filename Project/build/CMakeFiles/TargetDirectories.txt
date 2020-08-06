@@ -1,3 +1,0 @@
-/project/Project/build/CMakeFiles/rebuild_cache.dir
-/project/Project/build/CMakeFiles/detector.dir
-/project/Project/build/CMakeFiles/edit_cache.dir
